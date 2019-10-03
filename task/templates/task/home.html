@@ -1,0 +1,25 @@
+{% extends "task/base.html" %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-6">
+          {% for task in tasks %}
+              <article class="media content-section hm">
+                <img class="rounded-circle article-img" src="{{ task.author.profile.image.url }}" alt="">
+                <div class="media-body">
+                  <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'user-tasks' task.author.username %}">{{ task.author }}</a>
+                    <small class="text-muted">{{ task.date_created|date:"d F Y" }}</small>
+                  </div>
+                  <h2><a class="article-title" href="{% url 'task-detail' task.id %}">{{ task.title }}</a></h2>
+                  <p class="article-content">Description: {{ task.description }}</p>
+                  <p class="article-content">Deadline: {{ task.deadline }}</p><br>
+                </div>
+              </article><hr>
+          {% endfor %}
+    </div>
+    <div class="col-6">
+      </div>
+  </div>
+</main>
+{% endblock content %}
