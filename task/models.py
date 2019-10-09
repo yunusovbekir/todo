@@ -20,7 +20,7 @@ class Task(models.Model):
 
 class Permitted_Users(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, to_field='id')
-    permitted_username = models.ForeignKey(User, on_delete = models.CASCADE)
+    permitted_username = models.ForeignKey(User, related_name='permitted_user', on_delete = models.CASCADE)
     can_comment = models.BooleanField(default=False)
 
     def __str__(self):

@@ -1,3 +1,5 @@
+from builtins import getattr, super
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -9,9 +11,7 @@ from django.views.generic import (
                             CreateView,
                             UpdateView,
                             DeleteView,
-                            FormView
 )
-from django.views.generic.detail import SingleObjectMixin
 from queryset_sequence import QuerySetSequence
 from .models import *
 from .forms import *
@@ -148,7 +148,14 @@ class PermittedUsersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'p_users'
 
     def get_queryset(self):
-        return Permitted_Users.objects.filter(task=self.kwargs['pk']).order_by('permitted_username')
+        final_query = Permitted_Users.objects.filter(task=self.kwargs['pk']).order_by('permitted_username')
+        return final_query
+
+    def get_context_data(self, **kwargs):
+        context = super(PermittedUsersListView, self).get_context_data(**kwargs)
+        a = Permitted_Users.objects.filter(task=self.kwargs['pk']).order_by('permitted_username')
+        context['task_id'] = self.kwargs['pk']
+        return context
 
     def test_func(self):
         c_task = Task.objects.get(pk=self.kwargs['pk'])
@@ -180,12 +187,14 @@ class PermittedUsersCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
 class PermittedUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Permitted_Users
     success_url = '/'
-    template_name = 'permitted_user_confirm_delete.html'
+    template_name = 'task/permitted_user_confirm_delete.html'
 
     def get_object(self):
         pk = self.kwargs['pk']
         permission_pk = self.kwargs['permission_pk']
-        return self.model.objects.filter(task__id = pk, permitted_username__id = permission_pk).last()
+        obj = self.model.objects.filter(task__id = pk, permitted_username__id = permission_pk).last()
+
+        return obj
 
     def test_func(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
