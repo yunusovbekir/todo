@@ -3,19 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ef9740ab-8a94-4202-a571-feed1a251459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/static/task/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/task/static/task/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task/templates/task/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/templates/task/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/explore.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/templates/task/task_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/task_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/todo/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todo/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/todo/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/migrations/0001_initial.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +42,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../e_projects/Cloned_repo/test_cbg_ejournal_backend/ejournal_backend/settings.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../web_django_1/web_django_1/urls.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -116,7 +109,7 @@
       <workItem from="1570589038290" duration="3672000" />
       <workItem from="1570606568008" duration="17610000" />
       <workItem from="1570696313784" duration="834000" />
-      <workItem from="1570697253755" duration="6065000" />
+      <workItem from="1570697253755" duration="11624000" />
     </task>
     <servers />
   </component>

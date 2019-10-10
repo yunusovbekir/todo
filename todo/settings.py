@@ -10,7 +10,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fwki09_x7z@vwb3=)egz_f==)jcj485-smpo+qp&^$7nct+s(1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
+DEBUG = not os.environ.get("DEBUG", False)
+PROD = not DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -66,11 +68,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'todo.wsgi.application'
 
 SITE_ID = 3
-
-BOOTSTRAP4 = {
-    'include_jquery': True,
-}
-
 
 
 # Database
@@ -131,12 +128,24 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

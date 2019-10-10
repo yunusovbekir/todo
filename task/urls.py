@@ -23,3 +23,6 @@ urlpatterns = [
     path('tasks/<int:pk>/permitted-user-add/', PermittedUsersCreateView.as_view(), name='permitted-user-add'),
     path('tasks/<int:pk>/permitted-users/delete/<int:permission_pk>', PermittedUserDeleteView.as_view(), name='permitted-user-delete'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
