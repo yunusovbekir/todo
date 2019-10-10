@@ -11,11 +11,11 @@ class MyForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'deadline']
-        widgets = { 'deadline': DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        }) }
-
+        deadline = forms.DateField(
+            widget=forms.DateTimeInput(
+                attrs={'type': 'date'}
+            )
+        )
 
 class PermittedUsersForm(forms.ModelForm):
 

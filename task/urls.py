@@ -10,11 +10,10 @@ from .views import (
     PermittedUsersCreateView,
     PermittedUserDeleteView,
 )
-from . import forms
 
 
 urlpatterns = [
-    path('', TaskListView.as_view(), name='tasks-home'),
+    path('explore/', TaskListView.as_view(), name='tasks-explore'),
     path('user/<str:username>', UserTaskListView.as_view(), name='user-tasks'),
     path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
     path('tasks/new/', TaskCreateView.as_view(), name='task-create'),

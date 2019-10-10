@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     'task.apps.TaskConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
-    'bootstrap4',
     'bootstrap_datepicker_plus',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,6 +29,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'django.contrib.humanize',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 ]
 
 MIDDLEWARE = [
@@ -40,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'todo.urls'
@@ -62,10 +65,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'todo.wsgi.application'
 
+SITE_ID = 3
+
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
-# TEMPUS_DOMINUS_LOCALIZE = True
+
 
 
 # Database
@@ -73,8 +78,12 @@ BOOTSTRAP4 = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'todo_app_database',
+        'USER': 'postgres',
+        'PASSWORD': 'admin@12345%',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

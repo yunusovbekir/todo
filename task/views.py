@@ -19,7 +19,7 @@ from .forms import *
 
 class TaskListView(ListView):
     model = Task
-    template_name = 'task/home.html'   #<app>/<model>_<viewtype>.html
+    template_name = 'task/explore.html'   #<app>/<model>_<viewtype>.html
     context_object_name = 'tasks'
     ordering = ['-date_created']
 
@@ -175,7 +175,7 @@ class PermittedUsersCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('tasks-home')
+        return reverse('tasks-explore')
 
     def test_func(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
@@ -193,7 +193,6 @@ class PermittedUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
         pk = self.kwargs['pk']
         permission_pk = self.kwargs['permission_pk']
         obj = self.model.objects.filter(task__id = pk, permitted_username__id = permission_pk).last()
-
         return obj
 
     def test_func(self):

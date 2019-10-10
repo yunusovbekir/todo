@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+
 class Task(models.Model):
     title = models.CharField(max_length = 100)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
@@ -17,6 +18,9 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('task-detail', kwargs={'pk':self.pk})
 
+    class Meta:
+        verbose_name_plural = "Tasks"
+
 
 class Permitted_Users(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, to_field='id')
@@ -29,6 +33,10 @@ class Permitted_Users(models.Model):
     def get_absolute_url(self):
         return reverse('permitted-users', kwargs={'pk':self.pk})
 
+    class Meta:
+        verbose_name_plural = "Permitted Users"
+
+
 class Comment(models.Model):
     username = models.ForeignKey(User, on_delete = models.CASCADE)
     comment_content = models.TextField()
@@ -37,3 +45,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{}".format(self.comment_content)
+
+    class Meta:
+        verbose_name_plural = "Comments"

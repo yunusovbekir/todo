@@ -4,6 +4,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
+from django.contrib.flatpages import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +17,11 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
     path('', include('task.urls')),
+    # path('pages/', include('django.contrib.flatpages.urls')),
+]
+
+urlpatterns += [
+    path('', views.flatpage, {'url': '//'}, name='home'),
 ]
 
 if settings.DEBUG:

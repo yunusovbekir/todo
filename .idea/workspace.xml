@@ -2,15 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef9740ab-8a94-4202-a571-feed1a251459" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/migrations/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/task/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/templates/task/permitted_user_confirm_delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/permitted_user_confirm_delete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/templates/task/permitted_users.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/permitted_users.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/templates/task/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/templates/task/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/explore.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/templates/task/task_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/task/templates/task/task_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/todo/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/todo/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/migrations/0001_initial.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +25,13 @@
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,10 +45,18 @@
   </component>
   <component name="ProjectId" id="1RdlV7hUemdQeavK0k89IMN8MEx" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../e_projects/Cloned_repo/test_cbg_ejournal_backend/core/templates/core/home.html" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../e_projects/Cloned_repo/test_cbg_ejournal_backend/ejournal_backend/settings.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\desktop\personal_projects\todo_app\task\templates\task" />
+      <recent name="D:\desktop\personal_projects\todo_app\task\templates\flatpages" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -94,7 +114,9 @@
       <workItem from="1570384005709" duration="16000" />
       <workItem from="1570523075695" duration="4731000" />
       <workItem from="1570589038290" duration="3672000" />
-      <workItem from="1570606568008" duration="13567000" />
+      <workItem from="1570606568008" duration="17610000" />
+      <workItem from="1570696313784" duration="834000" />
+      <workItem from="1570697253755" duration="6065000" />
     </task>
     <servers />
   </component>
