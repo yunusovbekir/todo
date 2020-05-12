@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm
 
+
 def register(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
@@ -10,7 +11,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            return redirect('tasks-home')
+            return redirect('tasks-explore')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
@@ -19,11 +20,11 @@ def register(request):
 @login_required
 def profile(request):
     if request.method == "POST":
-        u_form = UserUpdateForm(request.POST, instance=request.user) #error
+        u_form = UserUpdateForm(request.POST, instance=request.user)  # error
 
         if u_form.is_valid():
             u_form.save()
-            messages.success(request, f'Your profile has been updated')
+            messages.success(request, 'Your profile has been updated')
             return redirect('profile')
 
     else:
