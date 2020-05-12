@@ -10,10 +10,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fwki09_x7z@vwb3=)egz_f==)jcj485-smpo+qp&^$7nct+s(1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not os.environ.get("DEBUG", False)
+# DEBUG = not os.environ.get("DEBUG", False)
+# PROD = not DEBUG
+DEBUG = True
 PROD = not DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,7 @@ ROOT_URLCONF = 'todo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'task/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,11 +77,14 @@ SITE_ID = 3
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'todo_app_database',
-        'USER': 'postgres',
-        'PASSWORD': 'admin@12345%',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.environ.get('POSTGRES_DB', "db_name"),
+        'USER': os.environ.get('POSTGRES_USER', "db_user"),
+        'PASSWORD': os.environ.get(
+            'POSTGRES_PASSWORD',
+            "gk2ccPem87TVMvxKsCndcJyHyK5NPNUWkQXJXtwz5MyXeZjuMJPTeZkpECCT9uEZ"
+        ),
+        'HOST': os.environ.get('POSTGRES_HOST', "localhost"),
+        'PORT': os.environ.get('POSTGRES_PORT', 5432),
     }
 }
 
@@ -127,11 +131,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+if PROD:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"),
+    ]
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(BASE_DIR, 'task/templates'),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -168,3 +176,41 @@ CELERY_TIMEZONE = 'UTC'
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+LOG_LEVEL = 'ERROR' if PROD else 'DEBUG'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': not DEBUG,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s:=> %(message)s',
+        },
+        'focused': {
+            'format': '\n----------------------\n%(asctime)s [%(levelname)s] %(name)s:=> %(message)s \n----------------------',
+        },
+    },
+    'handlers': {
+        'my_custom_debug': {
+            'level': LOG_LEVEL,
+            'class': 'logging.StreamHandler',
+            'formatter': 'focused',
+        },
+        'request_handler': {
+            'level': LOG_LEVEL,
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['my_custom_debug'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['request_handler'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+    },
+}

@@ -17,6 +17,7 @@ from .models import *
 from .forms import *
 
 
+
 class TaskListView(ListView):
     model = Task
     template_name = 'task/explore.html'   #<app>/<model>_<viewtype>.html

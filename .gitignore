@@ -1,0 +1,10 @@
+postgredb/
+redisdb/
+.venv/
+.idea/
+*.pyc
+*.log
+app/db.sqlite3
+app/media
+db/
+.gitattributes
