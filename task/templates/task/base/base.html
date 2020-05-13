@@ -1,0 +1,102 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% include 'task/base/import.html' %}
+        {% block title %}{% endblock %}
+    </head>
+
+    <body class="w3-white w3-content" style="max-width:1600px">
+        {% include 'task/base/sidebar.html' %}
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+        <!-- !PAGE CONTENT! -->
+        <div class="w3-main" style="margin-left:300px">
+            <div class="top_header_area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 col-sm-6">
+                            <!--  Top Social bar start -->
+                            <div class="top_social_bar">
+                                <a href="#"><i class="fa fa-facebook"
+                                               aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter"
+                                               aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"
+                                               aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-skype"
+                                               aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-dribbble"
+                                               aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <!--  Login Register Area -->
+                        <div class="col-7 col-sm-6">
+                            <div class="signup-search-area d-flex align-items-center justify-content-end">
+                                <ol class="d-flex">
+                                    {% if user.is_authenticated %}
+                                        <li class="login"><a
+                                                href="{% url 'task-create' %}">New
+                                            Task</a></li>
+                                        <li class="login"><a href="{% url 'profile' %}">Profile</a>
+                                        </li>
+                                        <li class="login"><a href="{% url 'logout' %}">Logout</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="login"><a href="{% url 'login' %}">Login</a>
+                                        </li>
+                                        <li class="register"><a
+                                                href="{% url 'register' %}">Register</a>
+                                        </li>
+                                    {% endif %}
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            {% include 'task/base/header.html' %}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-12">
+                        <div class="row no-gutters">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#    <footer>#}
+        {#      <div class="w3-black w3-center w3-padding-24">Powered by <a href="#" title="W3.CSS" target="_blank" class="w3-hover-opacity">Yunusov</a></div>#}
+        {#    </footer>#}
+        <script>
+            // Script to open and close sidebar
+            function w3_open() {
+                document.getElementById("mySidebar").style.display = "block";
+                document.getElementById("myOverlay").style.display = "block";
+            }
+
+            function w3_close() {
+                document.getElementById("mySidebar").style.display = "none";
+                document.getElementById("myOverlay").style.display = "none";
+            }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+    </body>
+</html>

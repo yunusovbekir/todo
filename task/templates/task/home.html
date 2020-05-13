@@ -1,13 +1,9 @@
-{% extends "task/base.html" %}
-{% load humanize %}
+{% extends "task/base/base.html" %}
+{% load humanize i18n %}
+
+{% block title %}
+    <title>{% trans 'Mini To-Do app - Home' %}</title>
+{% endblock %}
+
 {% block content %}
-<main role="main" class="container">
-  <div class="row">
-    <div class="col-9">
-          {{ flatpage.content }}
-    </div>
-    <div class="col-3">
-      </div>
-  </div>
-</main>
-{% endblock content %}
+{% endblock %}

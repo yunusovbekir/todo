@@ -9,7 +9,8 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DeleteView,
-    RedirectView)
+    RedirectView,
+)
 from queryset_sequence import QuerySetSequence
 from .forms import CommentForm, MyForm, PermittedUsersForm
 from .models import Task, Comment, Permitted_Users

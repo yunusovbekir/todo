@@ -1,6 +1,12 @@
-{% extends "task/base.html" %}
+{% extends "task/base/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    <title> {% trans 'Mini To-Do App - Your Tasks' %} </title>
+{% endblock %}
+
 {% block content %}
-    <h1 class="col-md-12 mb-3">Your task(s) - {{ view.kwargs.username }}</h1>
+    <h1 class="col-md-12 mb-3">{% trans 'Your task(s) - ' %}{{ view.kwargs.username }}</h1>
     {% for task in tasks %}
     <div class="col-md-6">
         <article class="media content-section">
