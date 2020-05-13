@@ -1,13 +1,14 @@
 from django import forms
 from django.forms.widgets import CheckboxInput
-from .models import Task, Permitted_Users, Comment
+from django.contrib.auth import get_user_model
+from .models import Task, Permitted_Users, Comment, Permitted_User
 
 
 class DateTimeInput(forms.DateTimeInput):
     input_formats = '%m/%d/%Y %H:%M'
 
 
-class MyForm(forms.ModelForm):
+class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'deadline']
@@ -31,3 +32,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["comment_content"]
+
+
+class PermittedUserAddForm(forms.Form):
+    username = forms.CharField()

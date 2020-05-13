@@ -1,3 +1,6 @@
+from itertools import chain
+
+from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
@@ -12,9 +15,9 @@ from django.views.generic import (
     RedirectView,
 )
 from queryset_sequence import QuerySetSequence
-from .forms import CommentForm, MyForm, PermittedUsersForm
-from .models import Task, Comment, Permitted_Users
-
+from .forms import CommentForm, TaskForm, PermittedUsersForm, \
+    PermittedUserAddForm
+from .models import Task, Comment, Permitted_Users, Permitted_User
 
 User = get_user_model()
 
@@ -127,7 +130,7 @@ class TaskDetailView(View):
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    form_class = MyForm
+    form_class = TaskForm
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -211,6 +214,26 @@ class PermittedUsersCreateView(
         if self.request.user == task.author:
             return True
         return False
+
+
+class PermittedUserUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, UpdateView
+):
+    model = Permitted_User
+    form_class = PermittedUserAddForm
+    template_name_suffix = '_create_form'
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        users = chain(
+            self.object.read_only_users.all(),
+            self.object.comment_allowed_users.all(),
+        )
+
+        if username in users:
+            raise ValidationError('This user has been already added.')
+
+        return super(PermittedUserUpdateView, self).form_valid(form)
 
 
 class PermittedUserDeleteView(
