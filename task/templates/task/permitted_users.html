@@ -9,15 +9,31 @@
     <h4 class="col-md-12 mb-3">{% trans 'Permitted Users' %}</h4>
     <article class="media content-section">
       <div class="media-body">
+        <h5> Comment Allowed Users: </h5>
         <ul>
-          {% for p_user in p_users %}
-            <li>{{ p_user.permitted_username }}</li>
-              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'permitted-user-delete' task_id p_user.permitted_username.id %}">{% trans 'Delete Task' %}</a>
+          {% for user in comment_allowed_users %}
+            <li>{{ user.username }}</li>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'permitted-user-delete' task_id user.id %}">{% trans 'Delete Task' %}</a>
             {% empty %}
           <div class="col-md-12">
             <article class="media content-section">
               <div class="media-body">
-                <h7>{% trans 'You did not permitted any user to see and/or comment to your task' %}</h7>
+                <h7>{% trans 'You did not permitted any user to comment on your task' %}</h7>
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+        </ul>
+        <h5> Read Only Users: </h5>
+        <ul>
+          {% for user in read_only_users %}
+            <li>{{ user.username }}</li>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'permitted-user-delete' task_id user.id %}">{% trans 'Delete Task' %}</a>
+            {% empty %}
+          <div class="col-md-12">
+            <article class="media content-section">
+              <div class="media-body">
+                <h7>{% trans 'You did not permitted any user to see your task' %}</h7>
               </div>
             </article>
           </div>

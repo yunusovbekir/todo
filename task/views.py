@@ -23,15 +23,15 @@ class MainPageRedirectView(LoginRequiredMixin, generic.RedirectView):
 
 
 class TaskListView(LoginRequiredMixin, generic.ListView):
+    """
+    return request user's tasks and the ones request user is allowed to see
+    """
     model = Task
     template_name = 'task/explore.html'
     context_object_name = 'tasks'
     ordering = ['-date_created']
 
     def get_queryset(self):
-        """
-        return request user's tasks and the ones request user is allowed to see
-        """
 
         # request user's tasks
         task_list_1 = Task.objects.filter(author=self.request.user)
@@ -48,9 +48,8 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
 
 class UserTaskListView(LoginRequiredMixin, generic.ListView):
     """
-    if request user is the owner, return all tasks
-    elif request user is a guest, return only allowed tasks
-    else return only a message " No task you can access "
+    If request user is the owner of the profile, return all tasks
+    else return those tasks that the request user is allowed
     """
 
     model = Task
@@ -58,13 +57,31 @@ class UserTaskListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'tasks'
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Task.objects.filter(author=user).order_by('-date_created')
+        tasks = Task.objects.filter(
+            author__username=self.kwargs.get('username')
+        )
+        if self.request.user.username == self.kwargs.get('username'):
+            return tasks
+        else:
+            tasks_list = []
+            for task in tasks:
+                obj = task.permitted_user_set.first()
+                allowed_users_queryset = (
+                        obj.read_only_users.all() |
+                        obj.comment_allowed_users.all()
+                )
+                allowed_users = [user for user in allowed_users_queryset]
+                if self.request.user in allowed_users:
+                    tasks_list.append(task)
+            return tasks_list
 
 
 class TaskDisplayDetailView(
     LoginRequiredMixin, UserPassesTestMixin, generic.DetailView,
 ):
+    """
+    Allow only owner of the task and allowed users
+    """
     model = Task
     template_name = 'task/task_detail.html'
     context_object_name = 'task'
@@ -72,27 +89,41 @@ class TaskDisplayDetailView(
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        task = self.get_object()
+        obj = task.permitted_user_set.first()
+        if (
+                self.request.user in obj.comment_allowed_users.all() or
+                self.request.user == task.author
+        ):
+            context['is_allowed'] = True
+
         context['comments'] = Comment.objects.all()  # show comments
-        context['commentform'] = CommentForm()  # show comment form
+        context['comment_form'] = CommentForm()  # show comment form
         return context
 
     def test_func(self):
-        c_task = Task.objects.get(pk=self.kwargs['pk'])
-        p_users = [user for user in
-                   Permitted_User.objects.filter(task=self.kwargs['pk'])]
-        print(p_users)
-        # for p_user in Permitted_Users.objects.filter(task=self.kwargs['pk']):
-        #     p_users.append(p_user.permitted_username)
-        # if self.request.user == c_task.author:
-        #     return True
-        # elif self.request.user in p_users:
-        #     return True
-        # return False
+        obj = self.get_object()
+        permitted_users_object = obj.permitted_user_set.first()
 
-        return self.request.user == c_task.author or self.request.user in p_users
+        permitted_users = (
+                permitted_users_object.read_only_users.all() |
+                permitted_users_object.comment_allowed_users.all()
+        )
+
+        allowed_users = [user for user in permitted_users]
+
+        return (
+                self.request.user == obj.author or
+                self.request.user in allowed_users
+        )
 
 
-class CommentView(LoginRequiredMixin, generic.CreateView):
+class CommentView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
+):
+    """
+    Allow only the task owner and those who are allowed to comment on.
+    """
     model = Comment
     form_class = CommentForm
     template_name = 'task/task_detail.html'
@@ -105,29 +136,18 @@ class CommentView(LoginRequiredMixin, generic.CreateView):
     def get_success_url(self):
         return reverse('task-detail', args=[self.kwargs['pk']])
 
-    # def test_func(self):
-    #     c_task = Task.objects.get(pk=self.kwargs['pk'])
-    #     p_users = []
-    #     c_p_users = []
-    #
-    #     for p_user in Permitted_Users.objects.filter(task=self.kwargs['pk']):
-    #         p_users.append(p_user.permitted_username)
-    #         if p_user.can_comment:
-    #             c_p_users.append(
-    #             p_user.permitted_username)  # store those who can comment
-    #
-    #     if self.request.user == c_task.author:
-    #         return True
-    #     elif (
-    #     self.request.user in p_users
-    #     ) and (
-    #     self.request.user in c_p_users
-    #     ):  # something wrong with it
-    #         return True
-    #     return False
+    def test_func(self):
+        task = Task.objects.get(id=self.kwargs.get('pk'))
+        obj = task.permitted_user_set.first()
+
+        return (
+                self.request.user == task.author or
+                self.request.user in obj.comment_allowed_users.all()
+        )
 
 
 class TaskDetailView(View):
+    """ Combine `TaskDisplayDetailView` and `CommentView` """
 
     def get(self, request, *args, **kwargs):
         view = TaskDisplayDetailView.as_view()
@@ -139,6 +159,7 @@ class TaskDetailView(View):
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
+    """ View for Create a new task. """
     model = Task
     form_class = TaskForm
 
@@ -150,8 +171,13 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 class TaskUpdateView(
     LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
 ):
+    """ Only task owner can update the task. """
     model = Task
-    fields = ['title', 'description', 'deadline']
+    fields = (
+        'title',
+        'description',
+        'deadline',
+    )
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -166,60 +192,37 @@ class TaskDeleteView(
     LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
 ):
     model = Task
-    success_url = '/'
 
     def test_func(self):
         task = self.get_object()
         return self.request.user == task.author
 
+    def get_success_url(self):
+        return reverse(
+            'user-tasks',
+            kwargs={'username': self.request.user.username},
+        )
+
 
 class PermittedUsersListView(
-    LoginRequiredMixin, UserPassesTestMixin, generic.ListView
+    LoginRequiredMixin, UserPassesTestMixin, generic.TemplateView
 ):
-    model = Permitted_Users
-    template_name = 'task/permitted_users.html'
-    context_object_name = 'p_users'
+    """ Return all permitted user's list """
 
-    def get_queryset(self):
-        final_query = Permitted_Users.objects.filter(
-            task=self.kwargs['pk']
-        ).order_by('permitted_username')
-        return final_query
+    template_name = 'task/permitted_users.html'
 
     def get_context_data(self, **kwargs):
-        context = super(
-            PermittedUsersListView, self
-        ).get_context_data(**kwargs)
-
-        # a = Permitted_Users.objects.filter(
-        #     task=self.kwargs['pk']
-        # ).order_by('permitted_username')
-        context['task_id'] = self.kwargs['pk']
+        task = Task.objects.get(id=self.kwargs.get('pk'))
+        obj = task.permitted_user_set.first()
+        context = {
+            'task_id': task.id,
+            'comment_allowed_users': obj.comment_allowed_users.all(),
+            'read_only_users': obj.read_only_users.all(),
+        }
         return context
 
     def test_func(self):
-        c_task = Task.objects.get(pk=self.kwargs['pk'])
-        return self.request.user == c_task.author
-
-
-class PermittedUsersCreateView(
-    LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
-):
-    model = Permitted_Users
-    form_class = PermittedUsersForm
-
-    # template_name_suffix = '_create_form'
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.task_id = self.kwargs['pk']
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('tasks-explore')
-
-    def test_func(self):
-        task = Task.objects.get(pk=self.kwargs['pk'])
+        task = Task.objects.get(id=self.kwargs.get('pk'))
         return self.request.user == task.author
 
 
@@ -276,19 +279,28 @@ class PermittedUserUpdateView(
 class PermittedUserDeleteView(
     LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
 ):
-    model = Permitted_Users
-    success_url = '/'
+    model = Permitted_User
     template_name = 'task/permitted_user_confirm_delete.html'
 
-    def get_object(self):
-        pk = self.kwargs['pk']
-        permission_pk = self.kwargs['permission_pk']
-        obj = self.model.objects.filter(
-            task__id=pk,
-            permitted_username__id=permission_pk
-        ).last()
-        return obj
+    def get_object(self, queryset=None):
+        return get_user_model().objects.get(id=self.kwargs.get('user_id'))
+
+    def post(self, request, *args, **kwargs):
+        """
+        task - permitted user - user-i remove edirem
+
+        """
+        task = Task.objects.get(id=self.kwargs.get('pk'))
+        permitted_users_object = task.permitted_user_set.first()
+        user = get_user_model().objects.get(id=self.kwargs.get('user_id'))
+        permitted_users_object.read_only_users.remove(user)
+        permitted_users_object.comment_allowed_users.remove(user)
+        permitted_users_object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
     def test_func(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
         return self.request.user == task.author
+
+    def get_success_url(self):
+        return reverse('permitted-users', kwargs={'pk': self.kwargs.get('pk')})

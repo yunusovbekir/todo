@@ -84,15 +84,21 @@
                     <br>
                     <hr>
                     <div class="comment-form">
+                        {% if is_allowed %}
                         <h4 class="mb-30">{% trans 'Leave a comment' %}</h4>
                         <form method="POST">{% csrf_token %}
                             <fieldset>
-                                {{ commentform|crispy }}
+                                {{ comment_form|crispy }}
                             </fieldset>
                             <button type="submit"
                                     class="btn btn-secondary contact-btn"
-                                    style="cursor: pointer">{% trans 'Submit' %}</button>
+                                    style="cursor: pointer">{% trans 'Submit' %}
+                            </button>
                         </form>
+                        {% else %}
+                        <h4 class="mb-30">{% trans 'You are not allowed to comment on this task.' %}</h4>
+                        {% endif %}
+
                     </div>
                 </div>
             </div>
