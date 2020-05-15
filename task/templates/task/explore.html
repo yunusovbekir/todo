@@ -8,9 +8,9 @@
 {% block content %}
     <main role="main" class="container">
         <div class="row">
-            <div class="col-6">
-                {% for task in tasks %}
-                    <article class="media content-section hm">
+            {% for task in tasks %}
+                <div class="col-md-4">
+                    <article class="content-section hm">
                         <img class="rounded-circle article-img"
                              src="{{ task.author.profile.image.url }}" alt="">
                         <div class="media-body">
@@ -23,23 +23,17 @@
                                    href="{% url 'task-detail' task.id %}">{{ task.title }}</a>
                             </h2>
                             <p class="article-content">
-                                {% blocktrans %}
-                                Description: {{ task.description }}
-                                {% endblocktrans %}
+                                {% trans 'Description: ' %}{{ task.description }}
                             </p>
                             <p class="article-content">
-                                {% blocktrans %}
-                                    Deadline: {{ task.deadline|naturaltime }}
-                                {% endblocktrans %}
+                                {% trans 'Deadline: ' %}{{ task.deadline|naturaltime }}
                             </p>
                             <br>
                         </div>
                     </article>
                     <hr>
-                {% endfor %}
-            </div>
-            <div class="col-6">
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </main>
 {% endblock content %}

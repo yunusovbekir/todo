@@ -22,7 +22,6 @@
                                 </div>
                                 <div class="col">
                                     <div class="post-author-date-area d-flex float-right">
-
                                         <!-- Task Date -->
                                         <div class="post-date">
                                             <small class="text-muted">{{ task.date_created|date:"F d, Y" }}</small>
@@ -36,9 +35,12 @@
                             <img class="rounded img-responsive"
                                  src="{{ task.photo.url }}" alt="">
                         </div>
-                        <h6 class="text-justify">{% blocktrans %}Owner:{{ task.author }}{% endblocktrans %}</h6>
-                        <h6 class="text-justify">{% blocktrans %}Deadline:{{ task.deadline }}{% endblocktrans %}</h6>
-                        <h6 class="text-justify">{% blocktrans %}Description:{{ task.description }}{% endblocktrans %}</h6>
+                        <h6 class="text-justify">
+                            {% trans 'Owner: ' %}{{ task.author }}</h6>
+                        <h6 class="text-justify">
+                            {% trans 'Deadline: ' %}{{ task.deadline }}</h6>
+                        <h6 class="text-justify">
+                            {% trans 'Description: ' %}{{ task.description }}</h6>
                         {% if task.author == user %}
                             <div>
                                 <a class="btn btn-secondary btn-sm mt-1 mb-1"
@@ -85,18 +87,18 @@
                     <hr>
                     <div class="comment-form">
                         {% if is_allowed %}
-                        <h4 class="mb-30">{% trans 'Leave a comment' %}</h4>
-                        <form method="POST">{% csrf_token %}
-                            <fieldset>
-                                {{ comment_form|crispy }}
-                            </fieldset>
-                            <button type="submit"
-                                    class="btn btn-secondary contact-btn"
-                                    style="cursor: pointer">{% trans 'Submit' %}
-                            </button>
-                        </form>
+                            <h4 class="mb-30">{% trans 'Leave a comment' %}</h4>
+                            <form method="POST">{% csrf_token %}
+                                <fieldset>
+                                    {{ comment_form|crispy }}
+                                </fieldset>
+                                <button type="submit"
+                                        class="btn btn-secondary contact-btn"
+                                        style="cursor: pointer">{% trans 'Submit' %}
+                                </button>
+                            </form>
                         {% else %}
-                        <h4 class="mb-30">{% trans 'You are not allowed to comment on this task.' %}</h4>
+                            <h4 class="mb-30">{% trans 'You are not allowed to comment on this task.' %}</h4>
                         {% endif %}
 
                     </div>

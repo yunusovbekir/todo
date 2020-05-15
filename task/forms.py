@@ -25,3 +25,7 @@ class CommentForm(forms.ModelForm):
 
 class PermittedUserAddForm(forms.Form):
     username = forms.CharField()
+    allow_comment = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(),
+    )
