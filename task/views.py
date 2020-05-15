@@ -1,52 +1,53 @@
-from itertools import chain
-
-from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.contrib.auth import get_user_model
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-    RedirectView,
-)
+from django.views import generic
+from django.utils.translation import ugettext as _
 from queryset_sequence import QuerySetSequence
-from .forms import CommentForm, TaskForm, PermittedUsersForm, \
-    PermittedUserAddForm
+from .forms import (
+    CommentForm,
+    TaskForm,
+    PermittedUsersForm,
+    PermittedUserAddForm,
+)
 from .models import Task, Comment, Permitted_Users, Permitted_User
 
 User = get_user_model()
 
 
-class MainPageRedirectView(RedirectView):
+class MainPageRedirectView(LoginRequiredMixin, generic.RedirectView):
     permanent = False
     pattern_name = 'tasks-explore'
 
 
-class TaskListView(ListView):
+class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
-    template_name = 'task/explore.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'task/explore.html'
     context_object_name = 'tasks'
     ordering = ['-date_created']
 
     def get_queryset(self):
-        logged_user = self.request.user
-        user = User.objects.filter(username=logged_user)
-        tasks = Permitted_Users.objects.filter(
-            permitted_username__in=user
-        ).values('task')
-        query1 = Task.objects.filter(id__in=tasks)
+        """
+        return request user's tasks and the ones request user is allowed to see
+        """
 
-        # returns only logged user's tasks
-        query2 = Task.objects.filter(author__in=user)
-        return QuerySetSequence(query1, query2)
+        # request user's tasks
+        task_list_1 = Task.objects.filter(author=self.request.user)
+
+        # the ones request user is allowed to see
+        user_list_1 = Task.objects.filter(
+            permitted_user__read_only_users=self.request.user
+        )
+        user_list_2 = Task.objects.filter(
+            permitted_user__comment_allowed_users=self.request.user
+        )
+        return task_list_1 | user_list_1 | user_list_2
 
 
-class UserTaskListView(LoginRequiredMixin, ListView):
+class UserTaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     template_name = 'task/user_tasks.html'
     context_object_name = 'tasks'
@@ -57,7 +58,7 @@ class UserTaskListView(LoginRequiredMixin, ListView):
 
 
 class TaskDisplayDetailView(
-    LoginRequiredMixin, UserPassesTestMixin, DetailView,
+    LoginRequiredMixin, UserPassesTestMixin, generic.DetailView,
 ):
     model = Task
     template_name = 'task/task_detail.html'
@@ -72,17 +73,20 @@ class TaskDisplayDetailView(
 
     def test_func(self):
         c_task = Task.objects.get(pk=self.kwargs['pk'])
-        p_users = []
-        for p_user in Permitted_Users.objects.filter(task=self.kwargs['pk']):
-            p_users.append(p_user.permitted_username)
-        if self.request.user == c_task.author:
-            return True
-        elif self.request.user in p_users:
-            return True
-        return False
+        p_users = [user for user in Permitted_User.objects.filter(task=self.kwargs['pk'])]
+        print(p_users)
+        # for p_user in Permitted_Users.objects.filter(task=self.kwargs['pk']):
+        #     p_users.append(p_user.permitted_username)
+        # if self.request.user == c_task.author:
+        #     return True
+        # elif self.request.user in p_users:
+        #     return True
+        # return False
+
+        return self.request.user == c_task.author or self.request.user in p_users
 
 
-class CommentView(LoginRequiredMixin, CreateView):
+class CommentView(LoginRequiredMixin, generic.CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'task/task_detail.html'
@@ -128,7 +132,7 @@ class TaskDetailView(View):
         return view(request, *args, **kwargs)
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
 
@@ -137,7 +141,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class TaskUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
+):
     model = Task
     fields = ['title', 'description', 'deadline']
 
@@ -147,24 +153,22 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         task = self.get_object()
-        if self.request.user == task.author:
-            return True
-        return False
+        return self.request.user == task.author
 
 
-class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class TaskDeleteView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
+):
     model = Task
     success_url = '/'
 
     def test_func(self):
         task = self.get_object()
-        if self.request.user == task.author:
-            return True
-        return False
+        return self.request.user == task.author
 
 
 class PermittedUsersListView(
-    LoginRequiredMixin, UserPassesTestMixin, ListView
+    LoginRequiredMixin, UserPassesTestMixin, generic.ListView
 ):
     model = Permitted_Users
     template_name = 'task/permitted_users.html'
@@ -189,17 +193,15 @@ class PermittedUsersListView(
 
     def test_func(self):
         c_task = Task.objects.get(pk=self.kwargs['pk'])
-        if self.request.user == c_task.author:
-            return True
-        return False
+        return self.request.user == c_task.author
 
 
 class PermittedUsersCreateView(
-    LoginRequiredMixin, UserPassesTestMixin, CreateView
+    LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
 ):
     model = Permitted_Users
     form_class = PermittedUsersForm
-    template_name_suffix = '_create_form'
+    # template_name_suffix = '_create_form'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -211,33 +213,61 @@ class PermittedUsersCreateView(
 
     def test_func(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
-        if self.request.user == task.author:
-            return True
-        return False
+        return self.request.user == task.author
 
 
 class PermittedUserUpdateView(
-    LoginRequiredMixin, UserPassesTestMixin, UpdateView
+    LoginRequiredMixin, UserPassesTestMixin, generic.FormView
 ):
-    model = Permitted_User
+    template_name = 'task/permitted_users_create_form.html'
     form_class = PermittedUserAddForm
-    template_name_suffix = '_create_form'
+    success_url = reverse_lazy('tasks-explore')
 
     def form_valid(self, form):
+
+        # get related permitted user object
+        obj = Permitted_User.objects.get(task_id=self.kwargs.get('pk'))
+
+        # get username input data
         username = form.cleaned_data.get('username')
-        users = chain(
-            self.object.read_only_users.all(),
-            self.object.comment_allowed_users.all(),
-        )
 
-        if username in users:
-            raise ValidationError('This user has been already added.')
+        # get all users in the object
+        read_only_users = obj.read_only_users.all()
+        comment_allowed_users = obj.comment_allowed_users.all()
+        already_added_users = read_only_users | comment_allowed_users
+        already_added_users = [
+            each.username for each in already_added_users
+        ]
 
-        return super(PermittedUserUpdateView, self).form_valid(form)
+        # make a list all active users in the application
+        registered_users = [
+            user.username
+            for user in get_user_model().objects.filter(is_active=True)
+        ]
+
+        # if user is not found
+        if username not in registered_users:
+            form.add_error('username', _('Username is not found.'))
+            return self.form_invalid(form)
+
+        # if user has already been added
+        elif username in already_added_users:
+            form.add_error('username', _('This user has been already added.'))
+            return self.form_invalid(form)
+
+        new_user = get_user_model().objects.get(username=username)
+
+        obj.read_only_users.add(new_user)
+        obj.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def test_func(self):
+        task = Task.objects.get(pk=self.kwargs['pk'])
+        return self.request.user == task.author
 
 
 class PermittedUserDeleteView(
-    LoginRequiredMixin, UserPassesTestMixin, DeleteView
+    LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
 ):
     model = Permitted_Users
     success_url = '/'
@@ -254,6 +284,4 @@ class PermittedUserDeleteView(
 
     def test_func(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
-        if self.request.user == task.author:
-            return True
-        return False
+        return self.request.user == task.author

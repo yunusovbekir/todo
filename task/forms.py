@@ -1,7 +1,6 @@
 from django import forms
 from django.forms.widgets import CheckboxInput
-from django.contrib.auth import get_user_model
-from .models import Task, Permitted_Users, Comment, Permitted_User
+from .models import Task, Permitted_Users, Comment
 
 
 class DateTimeInput(forms.DateTimeInput):

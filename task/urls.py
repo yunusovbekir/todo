@@ -12,6 +12,7 @@ from .views import (
     PermittedUsersListView,
     PermittedUsersCreateView,
     PermittedUserDeleteView,
+    PermittedUserUpdateView,
 )
 
 
@@ -30,9 +31,11 @@ urlpatterns = [
     path('tasks/<int:pk>/permitted-users/',
          PermittedUsersListView.as_view(),
          name='permitted-users'),
-    path('tasks/<int:pk>/permitted-user-add/',
-         PermittedUsersCreateView.as_view(),
+
+    path('tasks/<int:pk>/permitted-user-add/',  # This is the url
+         PermittedUserUpdateView.as_view(),
          name='permitted-user-add'),
+
     path('tasks/<int:pk>/permitted-users/delete/<int:permission_pk>',
          PermittedUserDeleteView.as_view(),
          name='permitted-user-delete'),
