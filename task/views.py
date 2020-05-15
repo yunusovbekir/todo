@@ -6,7 +6,6 @@ from django.views import View
 from django.contrib.auth import get_user_model
 from django.views import generic
 from django.utils.translation import ugettext as _
-from queryset_sequence import QuerySetSequence
 from .forms import (
     CommentForm,
     TaskForm,
@@ -48,6 +47,12 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
 
 
 class UserTaskListView(LoginRequiredMixin, generic.ListView):
+    """
+    if request user is the owner, return all tasks
+    elif request user is a guest, return only allowed tasks
+    else return only a message " No task you can access "
+    """
+
     model = Task
     template_name = 'task/user_tasks.html'
     context_object_name = 'tasks'
@@ -73,7 +78,8 @@ class TaskDisplayDetailView(
 
     def test_func(self):
         c_task = Task.objects.get(pk=self.kwargs['pk'])
-        p_users = [user for user in Permitted_User.objects.filter(task=self.kwargs['pk'])]
+        p_users = [user for user in
+                   Permitted_User.objects.filter(task=self.kwargs['pk'])]
         print(p_users)
         # for p_user in Permitted_Users.objects.filter(task=self.kwargs['pk']):
         #     p_users.append(p_user.permitted_username)
@@ -201,6 +207,7 @@ class PermittedUsersCreateView(
 ):
     model = Permitted_Users
     form_class = PermittedUsersForm
+
     # template_name_suffix = '_create_form'
 
     def form_valid(self, form):
