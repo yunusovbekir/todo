@@ -1,10 +1,19 @@
 {% extends "task/base/base.html" %}
-{% block content %}
+{% load i18n %}
 
+{% block title %}
+    <title> {% trans 'Mini To-Do App - Logout' %} </title>
+{% endblock %}
+
+{% block content %}
 
       <div class="pt-3">
         <small class="text-muted">
-          <h5>You are just logged out. <a href="{% url 'login' %}">Log In</a> again</h5>
+          <h5>
+              {% blocktrans %}
+                You are just logged out. <a href="/login/">Log In</a> again
+              {% endblocktrans %}
+          </h5>
         </small>
       </div>
 
