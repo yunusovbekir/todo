@@ -1,6 +1,5 @@
 from django import forms
-from django.forms.widgets import CheckboxInput
-from .models import Task, Permitted_Users, Comment
+from .models import Task, Comment
 
 
 class DateTimeInput(forms.DateTimeInput):
@@ -16,15 +15,6 @@ class TaskForm(forms.ModelForm):
                 attrs={'type': 'date'}
             )
         )
-
-
-class PermittedUsersForm(forms.ModelForm):
-    class Meta:
-        model = Permitted_Users
-        fields = ['permitted_username', 'can_comment']
-        widgets = {
-            'can_comment': CheckboxInput()
-        }
 
 
 class CommentForm(forms.ModelForm):

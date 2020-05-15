@@ -1,18 +1,16 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.contrib.auth import get_user_model
 from django.views import generic
 from django.utils.translation import ugettext as _
+from .models import Task, Comment, Permitted_User
 from .forms import (
     CommentForm,
     TaskForm,
-    PermittedUsersForm,
     PermittedUserAddForm,
 )
-from .models import Task, Comment, Permitted_Users, Permitted_User
 
 User = get_user_model()
 
@@ -252,7 +250,7 @@ class PermittedUserUpdateView(
         # make a list all active users in the application
         registered_users = [
             user.username
-            for user in get_user_model().objects.filter(is_active=True)
+            for user in User.objects.filter(is_active=True)
         ]
 
         # if user is not found
@@ -265,7 +263,7 @@ class PermittedUserUpdateView(
             form.add_error('username', _('This user has been already added.'))
             return self.form_invalid(form)
 
-        new_user = get_user_model().objects.get(username=username)
+        new_user = User.objects.get(username=username)
 
         obj.read_only_users.add(new_user)
         obj.save()
@@ -283,7 +281,7 @@ class PermittedUserDeleteView(
     template_name = 'task/permitted_user_confirm_delete.html'
 
     def get_object(self, queryset=None):
-        return get_user_model().objects.get(id=self.kwargs.get('user_id'))
+        return User.objects.get(id=self.kwargs.get('user_id'))
 
     def post(self, request, *args, **kwargs):
         """
@@ -292,7 +290,7 @@ class PermittedUserDeleteView(
         """
         task = Task.objects.get(id=self.kwargs.get('pk'))
         permitted_users_object = task.permitted_user_set.first()
-        user = get_user_model().objects.get(id=self.kwargs.get('user_id'))
+        user = User.objects.get(id=self.kwargs.get('user_id'))
         permitted_users_object.read_only_users.remove(user)
         permitted_users_object.comment_allowed_users.remove(user)
         permitted_users_object.save()
