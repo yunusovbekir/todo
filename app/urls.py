@@ -35,7 +35,7 @@ PASSWORD_URLS = [
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('task.urls')),
+    path('', include('core.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + USER_URLS + PASSWORD_URLS
 
