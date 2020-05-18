@@ -1,0 +1,69 @@
+{% extends 'base/index.html' %}
+{% load i18n %}
+
+{% block title %}
+  <title> {% trans 'Mini To-Do App - ' %} {{ object.title }} </title>
+{% endblock %}
+
+{% block content %}
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>{{ object.title }}</h2>
+        </div>
+
+        <div class="row content">
+            <div class="col-lg-8 task-box">
+            <div class="container">
+                <p>{% trans 'Author: ' %}
+                    <a href="{% url 'user-tasks' object.author.username %}">
+                    {{ object.author }}
+                    </a>
+                </p>
+                <p>
+                    {% trans 'Deadline: ' %}{{ object.deadline }}
+                </p>
+                <p>
+                    {% trans 'Description: ' %}{{ object.description }}
+                </p>
+            </div>
+            <hr>
+                <div id="comment">
+                    {% if comments %}
+                    <div class="comment">
+                    </div>
+                    {% else %}
+                    <div class="comment">
+                        <div class="container">
+                        {% trans 'No comment' %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="comment-form">
+                        <div data-aos="fade-up">
+                            <form action="" method="post" role="form" class="email-form">
+                                    <div class="form-group">
+                                        {{ comment_form.comment_content }}
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="loading">Loading</div>
+                                        <div class="error-message"></div>
+                                        <div class="sent-message">Your message has been
+                                            sent. Thank you!
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit">Comment</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

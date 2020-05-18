@@ -1,0 +1,52 @@
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>About the application</h2>
+            <p>Quite minimal app with various functionality.</p>
+        </div>
+
+        <div class="row content">
+            <div class="col-lg-6">
+                <p>
+                    I demonstrate my basic different skills on this app.
+                </p>
+                <ul>
+                    <li><i class="ri-check-double-line"></i>
+                        You can created your task and, if you wish,
+                        you can share your task by providing other users' username,
+                        and also you can give an access to write a comment on your task.
+                        You can delete all the comments on your task.
+                        You can update and delete all your comments on another users' task.
+                    </li>
+                    <li><i class="ri-check-double-line"></i>
+                        You set a deadline for the task,
+                        and you will receive a notification by email.
+                        Notifications sent asynchronously by Celery.
+                        The broker is Redis
+                    </li>
+                    <li><i class="ri-check-double-line"></i>
+                        Commenting feature has been built with Django-channels.
+                        Users can show their comments real-time. (UPDATE)
+                    </li>
+                    <li><i class="ri-check-double-line"></i>
+                        While the comment are stored on a MySQL database,
+                        all the other information is kept on a Postgres database.
+                        Django multi-database feature has been implemented.
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 pt-4 pt-lg-0">
+                <p>
+                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate
+                    velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <a href="{% url 'tasks-explore' %}" class="btn-learn-more">Explore</a>
+            </div>
+        </div>
+
+    </div>
+</section>

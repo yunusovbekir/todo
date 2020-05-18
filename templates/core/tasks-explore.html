@@ -1,0 +1,36 @@
+{% extends 'base/index.html' %}
+{% load i18n %}
+
+{% block title %}
+  <title> {% trans 'Mini To-Do App - Explore Tasks' %} </title>
+{% endblock %}
+
+{% block content %}
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>{% trans 'Tasks' %}</h2>
+                <p>
+                    {% blocktrans %}
+                    On this page, there are only your tasks and others' tasks that you are allowed to see.
+                    {% endblocktrans %}
+                </p>
+            </div>
+
+            <div class="row">
+                {% for task in tasks %}
+                <div class="col-lg-4 col-md-6 mt-4 d-flex flex-column"
+                     data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box iconbox-blue">
+                        <h4><a href="{% url 'task-detail' task.id %}">{{ task.title }}</a></h4>
+                        <p>{% trans 'Author:' %} <a href="{% url 'user-tasks' task.author.username %}">{{ task.author }}</a></p>
+                        <p>{% trans 'Deadline:' %} {{ task.deadline }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

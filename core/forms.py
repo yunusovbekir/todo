@@ -20,7 +20,14 @@ class TaskForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ["comment_content"]
+        fields = ("comment_content",)
+        widgets = {
+            'comment_content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Write your comment...',
+                'rows': '5',
+            })
+        }
 
 
 class PermittedUserAddForm(forms.Form):

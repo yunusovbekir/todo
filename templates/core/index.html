@@ -1,0 +1,21 @@
+{% extends 'base/index.html' %}
+{% load static i18n %}
+
+{% block title %}
+  <title> {% trans 'Mini To-Do App - Home' %} </title>
+{% endblock %}
+
+{% block content %}
+
+{% include 'core/hero.html' %}
+
+<main id="main">
+
+    {% include 'core/about.html' %}
+    {% include 'core/team.html' %}
+    {% include 'core/portfolio.html' %}
+    {% include 'core/contact.html' %}
+
+</main>
+
+{% endblock %}

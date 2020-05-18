@@ -2,41 +2,46 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", 'fwki09_x7z@vwb3=)egz_f==)jcj485-smpo+qp&^$7nct+s(1'
+)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fwki09_x7z@vwb3=)egz_f==)jcj485-smpo+qp&^$7nct+s(1'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = not os.environ.get("DEBUG", False)
 # PROD = not DEBUG
 DEBUG = True
 PROD = not DEBUG
 
-ALLOWED_HOSTS = ['*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['*']
 
-
-# Application definition
-
-INSTALLED_APPS = [
-    'core.apps.CoreConfig',
-    'users.apps.UsersConfig',
-    'crispy_forms',
-    'bootstrap_datepicker_plus',
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
-    'celery',
     'django.contrib.humanize',
     'django.contrib.sites',
     'django.contrib.flatpages',
 ]
+
+THIRD_PARTY_APPS = [
+    'crispy_forms',
+    'storages',
+    'celery',
+    'bootstrap_datepicker_plus',
+]
+
+CUSTOM_APPS = [
+    'core.apps.CoreConfig',
+    'users.apps.UsersConfig',
+]
+
+INSTALLED_APPS = THIRD_PARTY_APPS + CUSTOM_APPS + DJANGO_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +59,7 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'task/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -69,7 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-SITE_ID = 3
+SITE_ID = 1
 
 
 # Database
@@ -119,7 +125,7 @@ PASSWORD_HASHERS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Baku'
 
 USE_I18N = True
 
@@ -146,28 +152,18 @@ TEMPLATE_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_IMAGE_BACKEND = "pillow"
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': None,
-    },
-}
-
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'tasks-explore'
 LOGIN_URL = 'login'
 
-if not DEBUG:
+if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST_USER = os.environ.get("email_user", "user")
-    EMAIL_HOST = "smtp.domain.com"
+    EMAIL_HOST_USER = os.environ.get("EMAIL_USER", "yunusovbekir@gmail.com")
+    EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_PASSWORD = os.environ.get("email_password", "password")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD", "fpbivjpbskawsxws")
 else:
     EMAIL_BACKEND = (
         "django.core.mail.backends.console.EmailBackend"

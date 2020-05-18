@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import (
-    MainPageRedirectView,
+    IndexView,
     TaskListView,
     TaskDetailView,
     TaskCreateView,
@@ -17,7 +17,7 @@ from .views import (
 
 
 urlpatterns = [
-    path('', MainPageRedirectView.as_view(), name='home-redirect'),
+    path('', IndexView.as_view(), name='index'),
     path('explore/', TaskListView.as_view(), name='tasks-explore'),
     path('user/<str:username>', UserTaskListView.as_view(), name='user-tasks'),
     path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),

@@ -5,6 +5,8 @@ h3,
 h4,
 h5,
 h6 {
+    height: 100%;
+    margin: 0;
     font-family: "Raleway", sans-serif;
 }
 
@@ -80,3 +82,12 @@ ol li {
     padding-right: 12px;
 }
 
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+
+}

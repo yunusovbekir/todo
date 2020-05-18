@@ -18,10 +18,12 @@ User = get_user_model()
 # -----------------------------------------------------------------------------
 
 
-class MainPageRedirectView(LoginRequiredMixin, generic.RedirectView):
-    permanent = False
-    pattern_name = 'tasks-explore'
+class IndexView(generic.TemplateView):
+    template_name = 'core/index.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = {}
+        return ctx
 
 # -----------------------------------------------------------------------------
 
@@ -32,7 +34,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     """
 
     model = Task
-    template_name = 'task/explore.html'
+    template_name = 'core/tasks-explore.html'
     context_object_name = 'tasks'
     ordering = ('-date_created',)
 
@@ -57,11 +59,11 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
 class UserTaskListView(LoginRequiredMixin, generic.ListView):
     """
     If request user is the owner of the profile, return all tasks
-    else return those tasks that the request user is allowed
+    else return those tasks that the request user is allowed to see.
     """
 
     model = Task
-    template_name = 'task/user_tasks.html'
+    template_name = 'core/user-tasks.html'
     context_object_name = 'tasks'
 
     def get_queryset(self):
@@ -95,8 +97,7 @@ class TaskDisplayDetailView(
     """
 
     model = Task
-    template_name = 'task/task_detail.html'
-    context_object_name = 'task'
+    template_name = 'core/task-detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -142,7 +143,7 @@ class CommentView(
 
     model = Comment
     form_class = CommentForm
-    template_name = 'task/task_detail.html'
+    template_name = 'core/task_detail.html'
 
     def form_valid(self, form):
         form.instance.username = self.request.user
@@ -242,7 +243,7 @@ class PermittedUsersListView(
 ):
     """ Return all permitted user's list """
 
-    template_name = 'task/permitted_users.html'
+    template_name = 'core/permitted_users.html'
 
     def get_context_data(self, **kwargs):
         task = Task.objects.get(id=self.kwargs.get('pk'))
@@ -267,7 +268,7 @@ class PermittedUserAddView(
 ):
     """ Add a new `Permitted User` to a task """
 
-    template_name = 'task/permitted_users_create_form.html'
+    template_name = 'core/permitted_users_create_form.html'
     form_class = PermittedUserAddForm
     success_url = reverse_lazy('tasks-explore')
 
@@ -327,7 +328,7 @@ class PermittedUserUpdateView(
 ):
     """ Update a `Permitted User` """
 
-    template_name = 'task/permitted_users_create_form.html'
+    template_name = 'core/permitted_users_create_form.html'
 
     def get_user_object(self):
         return User.objects.get(id=self.kwargs.get('user_id'))
@@ -386,7 +387,7 @@ class PermittedUserDeleteView(
     """ Delete user from allowed users list """
 
     model = Permitted_User
-    template_name = 'task/permitted_user_confirm_delete.html'
+    template_name = 'core/permitted_user_confirm_delete.html'
 
     def get_object(self, queryset=None):
         return User.objects.get(id=self.kwargs.get('user_id'))
