@@ -8,22 +8,25 @@
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li class="active"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="active"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
                 <li><a href="{% url 'tasks-explore' %}">{% trans 'Explore Tasks' %}</a></li>
-                <li><a href="#about">{% trans 'About App' %}</a></li>
-                <li><a href="#team">{% trans 'About me' %}</a></li>
-                <li><a href="#portfolio">{% trans 'Portfolio' %}</a></li>
+                <li class="drop-down"><a href="">{% trans 'About' %}</a>
+                    <ul>
+                        <li><a href="#">{% trans 'About App' %}</a></li>
+                        <li><a href="#">{% trans 'About Me' %}</a></li>
+                    </ul>
+                </li>
                 <li><a href="#contact">{% trans 'Contact' %}</a></li>
 
             </ul>
         </nav>
 
         {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="get-started-btn scrollto">{% trans 'Profile' %}</a>
-        <a href="{% url 'logout' %}" class="get-started-btn scrollto">{% trans 'Logout' %}</a>
+        <a href="{% url 'profile' %}" class="get-started-btn">{% trans 'Profile' %}</a>
+        <a href="{% url 'logout' %}" class="get-started-btn">{% trans 'Logout' %}</a>
         {% else %}
-        <a href="{% url 'login' %}" class="get-started-btn scrollto">{% trans 'Login' %}</a>
-        <a href="{% url 'register' %}" class="get-started-btn scrollto">{% trans 'Get Started' %}</a>
+        <a href="{% url 'login' %}" class="get-started-btn">{% trans 'Login' %}</a>
+        <a href="{% url 'register' %}" class="get-started-btn">{% trans 'Get Started' %}</a>
         {% endif %}
 
     </div>
