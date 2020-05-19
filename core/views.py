@@ -241,7 +241,7 @@ class PermittedUsersListView(
 ):
     """ Return all permitted user's list """
 
-    template_name = 'core/permitted_users.html'
+    template_name = 'core/task/permitted-users-list.html'
 
     def get_context_data(self, **kwargs):
         task = Task.objects.get(id=self.kwargs.get('pk'))
@@ -326,10 +326,16 @@ class PermittedUserUpdateView(
 ):
     """ Update a `Permitted User` """
 
-    template_name = 'core/permitted_users_create_form.html'
+    template_name = 'core/task/permitted-user-detail.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(PermittedUserUpdateView, self).get_context_data(**kwargs)
+        ctx['task_id'] = self.kwargs.get('pk')
+        ctx['user_name'] = self.kwargs.get('username')
+        return ctx
 
     def get_user_object(self):
-        return User.objects.get(id=self.kwargs.get('user_id'))
+        return User.objects.get(username=self.kwargs.get('username'))
 
     def get_task_object(self):
         return Task.objects.get(id=self.kwargs.get('pk'))
@@ -385,10 +391,16 @@ class PermittedUserDeleteView(
     """ Delete user from allowed users list """
 
     model = Permitted_User
-    template_name = 'core/permitted_user_confirm_delete.html'
+    template_name = 'core/task/permitted-user-delete.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(PermittedUserDeleteView, self).get_context_data(**kwargs)
+        ctx['task_id'] = self.kwargs.get('pk')
+        ctx['user_name'] = self.kwargs.get('username')
+        return ctx
 
     def get_object(self, queryset=None):
-        return User.objects.get(id=self.kwargs.get('user_id'))
+        return User.objects.get(username=self.kwargs.get('username'))
 
     def post(self, request, *args, **kwargs):
         """
@@ -397,7 +409,7 @@ class PermittedUserDeleteView(
         """
         task = Task.objects.get(id=self.kwargs.get('pk'))
         permitted_users_object = task.permitted_user_set.first()
-        user = User.objects.get(id=self.kwargs.get('user_id'))
+        user = User.objects.get(username=self.kwargs.get('username'))
         permitted_users_object.read_only_users.remove(user)
         permitted_users_object.comment_allowed_users.remove(user)
         permitted_users_object.save()

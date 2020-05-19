@@ -1,0 +1,54 @@
+{% extends 'base/index.html' %}
+{% load i18n %}
+
+{% block title %}
+    <title> {% trans 'Mini To-Do App - Permitted Users' %} </title>
+{% endblock %}
+
+{% block content %}
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>{% trans 'Permitted Users List' %}</h2>
+                <p>
+                    {% blocktrans %}
+                        Permitted user's that can either see your task or see
+                        and comment on it
+                    {% endblocktrans %}
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mt-4 d-flex flex-column"
+                     data-aos="zoom-in" data-aos-delay="100">
+                <h5 class="d-flex justify-content-center">{% trans 'Read only users' %}</h5>
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class='bx bxs-user-x'></i>
+                        </div>
+                        {% for user in read_only_users %}
+                            <h4><a href="{% url 'permitted-user-update' task_id user.username %}">{{ user.username }}</a></h4>
+                        {% empty %}
+                            <h4>{% trans 'No user is found' %}</h4>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4 d-flex flex-column"
+                     data-aos="zoom-in" data-aos-delay="100">
+                    <h5 class="d-flex justify-content-center">{% trans 'Comment allowed users' %}</h5>
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class='bx bxs-user-check'></i>
+                        </div>
+                        {% for user in comment_allowed_users %}
+                            <h4><a href="{% url 'permitted-user-update' task_id user.username %}">{{ user.username }}</a></h4>
+                        {% empty %}
+                            <h4>{% trans 'No user is found' %}</h4>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

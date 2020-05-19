@@ -21,6 +21,8 @@ def get_datetime_difference_for_comment(value):
     minutes = trunc(minutes)
 
     if hours < 1:
+        if minutes == 0:
+            minutes = 1
         return '{}m'.format(minutes)
     elif hours > 24:
         days = round(hours / 24)

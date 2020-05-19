@@ -22,7 +22,10 @@
                 {% for task in tasks %}
                 <div class="col-lg-4 col-md-6 mt-4 d-flex flex-column"
                      data-aos="zoom-in" data-aos-delay="100">
-                    <div class="icon-box iconbox-blue">
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class="bx bx-task"></i>
+                        </div>
                         <h4><a href="{% url 'task-detail' task.id %}">{{ task.title }}</a></h4>
                         <p>{% trans 'Author:' %} <a href="{% url 'user-tasks' task.author.username %}">{{ task.author }}</a></p>
                         <p>{% trans 'Deadline:' %} {{ task.deadline }}</p>

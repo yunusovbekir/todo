@@ -2,23 +2,23 @@
 {% load i18n custom_tags %}
 
 {% block title %}
-    <title> {% trans 'Mini To-Do App - ' %} {{ object.title }} </title>
+    <title> {% trans 'Mini To-Do App - Delete User' %}</title>
 {% endblock %}
 
 {% block content %}
     <section id="about" class="about section-bg">
         <div class="container" data-aos="fade-up">
             <div class="section-title">
-                <h2>{{ object.title }}</h2>
+                <h2>{{ view.kwargs.username }}</h2>
             </div>
 
             <div class="row content justify-content-center">
                 <div class="col-lg-8 d-flex task-box">
                     <div class="container">
-                        <h5 class="d-flex justify-content-center">{% trans 'Are you sure to delete the task?' %}</h5>
+                        <h5 class="d-flex justify-content-center">{% trans "Are you sure to delete the user from permitted user's list?" %}</h5>
                         <br>
                         <div class="task-buttons-container d-flex justify-content-center">
-                            <a href="{% url 'task-detail' object.id %}" class="get-started-btn">{% trans 'Cancel' %}</a>
+                            <a href="{% url 'permitted-user-update' task_id view.kwargs.username %}" class="get-started-btn">{% trans 'Cancel' %}</a>
                             <form method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="delete-btn">{% trans 'Delete' %}</button>

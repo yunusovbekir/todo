@@ -36,10 +36,10 @@ urlpatterns = [
     path('tasks/<int:pk>/permitted-user-add/',
          PermittedUserAddView.as_view(),
          name='permitted-user-add'),
-    path('tasks/<int:pk>/permitted-users/update/<int:user_id>/',
+    path('tasks/<int:pk>/permitted-users/update/<str:username>/',
          PermittedUserUpdateView.as_view(),
          name='permitted-user-update'),
-    path('tasks/<int:pk>/permitted-users/delete/<int:user_id>/',
+    path('tasks/<int:pk>/permitted-users/delete/<str:username>/',
          PermittedUserDeleteView.as_view(),
          name='permitted-user-delete'),
 ]
