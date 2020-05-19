@@ -201,6 +201,7 @@ class TaskUpdateView(
     """ Only task owner can update the task. """
 
     model = Task
+    template_name = 'core/task-update-form.html'
     fields = (
         'title',
         'description',
