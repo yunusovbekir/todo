@@ -1,0 +1,39 @@
+{% extends 'base/index.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}
+    <title>{% trans 'Mini To-Do App - Update Your Task' %}</title>
+{% endblock %}
+
+{% block content %}
+    <section id="about" class="about section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="row content justify-content-center">
+                <div class="col-lg-6 task-box d-flex">
+                    <div class="container">
+                        <div class="section-title">
+                            <h4>{% trans "Add a user to Permitted User's list" %}</h4>
+                        </div>
+                        <div class="comment-form">
+                            <div data-aos="fade-up">
+                                <form method="post" role="form"
+                                      class="email-form">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        {{ form|crispy }}
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit">{% trans 'Add' %}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

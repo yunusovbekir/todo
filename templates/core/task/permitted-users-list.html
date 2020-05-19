@@ -48,6 +48,15 @@
                         {% endfor %}
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-6 mt-4 d-flex flex-column"
+                     data-aos="zoom-in" data-aos-delay="100">
+                    <h5 class="d-flex justify-content-center">{% trans 'Add new user' %}</h5>
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class='bx bxs-user-plus'></i></div>
+                            <h4><a href="{% url 'permitted-user-add' task_id %}">{% trans 'Add' %}</a></h4>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

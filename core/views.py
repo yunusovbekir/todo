@@ -266,7 +266,7 @@ class PermittedUserAddView(
 ):
     """ Add a new `Permitted User` to a task """
 
-    template_name = 'core/permitted_users_create_form.html'
+    template_name = 'core/task/permitted-user-add.html'
     form_class = PermittedUserAddForm
     success_url = reverse_lazy('tasks-explore')
 
