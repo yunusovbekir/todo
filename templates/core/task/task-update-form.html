@@ -21,7 +21,9 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         {{ form|crispy }}
-                                        <div class="validate"></div>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                     <div class="text-center">
                                         <button type="submit">{% trans 'Update' %}</button>

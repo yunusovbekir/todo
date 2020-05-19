@@ -12,7 +12,7 @@
             <div class="section-title">
                 <h2>{{ view.kwargs.username }}'s tasks.</h2>
                 <p>
-                    {% if request.user == view.kwargs.username %}
+                    {% if request.user.username == view.kwargs.username %}
                     {% trans 'On this page, there are only your tasks.' %}
                     {% else %}
                     {% trans 'On this page, there are only the tasks you are allowed to see.' %}

@@ -281,6 +281,31 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
+/* Delete Button */
+.delete-btn {
+  margin-left: 25px;
+  background: #a60000;
+  border-color: #a60000;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 30px 11px 30px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+}
+
+.delete-btn:hover {
+  background: #870000;
+  color: #fff;
+}
+
+.get-started-btn:hover {
+  background: #2079b8;
+  color: #fff;
+}
+
 @media (max-width: 768px) {
   .get-started-btn {
     margin: 0 48px 0 0;

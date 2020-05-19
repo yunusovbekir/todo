@@ -19,7 +19,7 @@ User = get_user_model()
 
 
 class IndexView(generic.TemplateView):
-    template_name = 'core/index.html'
+    template_name = 'core/home/index.html'
 
     def get_context_data(self, **kwargs):
         ctx = {}
@@ -34,7 +34,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     """
 
     model = Task
-    template_name = 'core/tasks-explore.html'
+    template_name = 'core/task/tasks-explore.html'
     context_object_name = 'tasks'
     ordering = ('-date_created',)
 
@@ -63,7 +63,7 @@ class UserTaskListView(LoginRequiredMixin, generic.ListView):
     """
 
     model = Task
-    template_name = 'core/user-tasks.html'
+    template_name = 'core/task/user-tasks.html'
     context_object_name = 'tasks'
 
     def get_queryset(self):
@@ -97,7 +97,7 @@ class TaskDisplayDetailView(
     """
 
     model = Task
-    template_name = 'core/task-detail.html'
+    template_name = 'core/task/task-detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -110,8 +110,8 @@ class TaskDisplayDetailView(
         ):
             context['is_allowed'] = True
 
-        context['comments'] = Comment.objects.all()  # show comments
-        context['comment_form'] = CommentForm()  # show comment form
+        context['comments'] = Comment.objects.all()
+        context['comment_form'] = CommentForm()
         return context
 
     def test_func(self):
@@ -143,7 +143,7 @@ class CommentView(
 
     model = Comment
     form_class = CommentForm
-    template_name = 'core/task-detail.html'
+    template_name = 'core/task/task-detail.html'
 
     def form_valid(self, form):
         form.instance.username = self.request.user
@@ -201,12 +201,8 @@ class TaskUpdateView(
     """ Only task owner can update the task. """
 
     model = Task
-    template_name = 'core/task-update-form.html'
-    fields = (
-        'title',
-        'description',
-        'deadline',
-    )
+    template_name = 'core/task/task-update-form.html'
+    form_class = TaskForm
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -224,6 +220,7 @@ class TaskDeleteView(
     LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
 ):
     model = Task
+    template_name = 'core/task/task-delete.html'
 
     def test_func(self):
         task = self.get_object()

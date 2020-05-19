@@ -7,9 +7,17 @@ class DateTimeInput(forms.DateTimeInput):
 
 
 class TaskForm(forms.ModelForm):
+
     class Meta:
         model = Task
-        fields = ['title', 'description', 'deadline']
+        fields = (
+            'title',
+            'description',
+            'deadline',
+        )
+        help_texts = {
+            'deadline': 'Example: 2021-01-31 23:49:00'
+        }
         deadline = forms.DateField(
             widget=forms.DateTimeInput(
                 attrs={'type': 'date'}
