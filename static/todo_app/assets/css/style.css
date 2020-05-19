@@ -560,7 +560,7 @@ section {
 # About
 --------------------------------------------------------------*/
 #about {
-  padding: 150px 0 150px 0;
+  padding: 130px 0 130px 0;
 }
 
 .about .content h3 {
@@ -621,7 +621,12 @@ section {
 .about .task-box {
     padding: 70px 20px 20px 20px;
     background: #fff;
-    box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+    box-shadow: 0 5px 90px 0 rgba(110, 123, 131, 0.05);
+}
+
+.about .task-buttons-container {
+  padding-bottom: 30px;
+  margin: 0 100px;
 }
 
 /*--------------------------------------------------------------
@@ -1500,6 +1505,11 @@ section {
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
+
+.contact {
+  padding: 130px 0 130px 0;
+}
+
 .contact .info {
   width: 100%;
   background: #fff;
@@ -1793,7 +1803,7 @@ section {
 --------------------------------------------------------------*/
 
 #comment {
-  padding: 50px 0;
+  padding: 30px 0;
 }
 
 .comment {
@@ -1805,6 +1815,22 @@ section {
   padding: 30px 0;
 }
 
+.comment-content {
+  background-color: #f0eded;
+  padding: 10px;
+  border: 1px #f0eded solid;
+  border-radius:10px;
+  overflow: hidden;
+}
+
+.comment-box {
+  padding: 10px;
+}
+
+.comment-box span {
+  font-size: 12px;
+  padding-left: 5px;
+}
 
 /*--------------------------------------------------------------
 # Footer

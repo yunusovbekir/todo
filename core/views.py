@@ -143,7 +143,7 @@ class CommentView(
 
     model = Comment
     form_class = CommentForm
-    template_name = 'core/task_detail.html'
+    template_name = 'core/task-detail.html'
 
     def form_valid(self, form):
         form.instance.username = self.request.user
@@ -411,3 +411,15 @@ class PermittedUserDeleteView(
 
     def get_success_url(self):
         return reverse('permitted-users', kwargs={'pk': self.kwargs.get('pk')})
+
+
+# -----------------------------------------------------------------------------
+
+
+class ContactView(generic.TemplateView):
+
+    template_name = 'contact/index.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = {}
+        return ctx

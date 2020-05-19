@@ -1,69 +1,84 @@
 {% extends 'base/index.html' %}
-{% load i18n %}
+{% load i18n custom_tags %}
 
 {% block title %}
-  <title> {% trans 'Mini To-Do App - ' %} {{ object.title }} </title>
+    <title> {% trans 'Mini To-Do App - ' %} {{ object.title }} </title>
 {% endblock %}
 
 {% block content %}
-<section id="about" class="about">
-    <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-            <h2>{{ object.title }}</h2>
-        </div>
-
-        <div class="row content">
-            <div class="col-lg-8 task-box">
-            <div class="container">
-                <p>{% trans 'Author: ' %}
-                    <a href="{% url 'user-tasks' object.author.username %}">
-                    {{ object.author }}
-                    </a>
-                </p>
-                <p>
-                    {% trans 'Deadline: ' %}{{ object.deadline }}
-                </p>
-                <p>
-                    {% trans 'Description: ' %}{{ object.description }}
-                </p>
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>{{ object.title }}</h2>
             </div>
-            <hr>
-                <div id="comment">
-                    {% if comments %}
-                    <div class="comment">
+
+            <div class="row content justify-content-center">
+                <div class="col-lg-8 d-flex task-box">
+                    <div class="container">
+
+                    <div class="task-buttons-container d-flex justify-content-around">
+                        <a href="{% url 'task-update' object.id %}" class="get-started-btn">{% trans 'Update Task' %}</a>
+                        <a href="{% url 'task-delete' object.id %}" class="get-started-btn">{% trans 'Delete Task' %}</a>
+                        <a href="{% url 'permitted-users' object.id %}" class="get-started-btn">{% trans 'Permitted Users' %}</a>
                     </div>
-                    {% else %}
-                    <div class="comment">
-                        <div class="container">
-                        {% trans 'No comment' %}
+
+                        <p>{% trans 'Author: ' %}
+                            <a href="{% url 'user-tasks' object.author.username %}">
+                                {{ object.author }}
+                            </a>
+                        </p>
+                        <p>
+                            {% trans 'Deadline: ' %}{{ object.deadline }} -- {{ object.deadline|get_datetime_difference_for_deadline }}
+                        </p>
+                        <p>
+                            {% trans 'Description: ' %}{{ object.description }}
+                        </p>
+                        <hr>
+                        <div class="col-lg-12 text-center">
+                            <h4>{% trans 'Comments' %}</h4>
                         </div>
-                    </div>
-                    {% endif %}
-                    <div class="comment-form">
-                        <div data-aos="fade-up">
-                            <form action="" method="post" role="form" class="email-form">
+                        <div id="comment">
+                        {% if comments %}
+                            {% for item in comments %}
+                                <div class="comment-box">
+                                    <h6 class="comment-content">
+                                        <a href="{% url 'user-tasks' item.username %}">{{ item.username.username }}: </a>{{ item.comment_content }}
+                                    </h6>
+                                    <span>{{ item.comment_date|get_datetime_difference_for_comment }}</span>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="comment">
+                                <div class="container">
+                                    {% trans 'No comment' %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="comment-form">
+                            <div data-aos="fade-up">
+                                <form method="post" role="form"
+                                      class="email-form">
+                                    {% csrf_token %}
                                     <div class="form-group">
                                         {{ comment_form.comment_content }}
                                         <div class="validate"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <div class="loading">Loading</div>
+                                        <div class="loading">{% trans 'Loading' %}</div>
                                         <div class="error-message"></div>
-                                        <div class="sent-message">Your message has been
-                                            sent. Thank you!
+                                        <div class="sent-message">{% trans 'Your message has been sent. Thank you!' %}
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit">Comment</button>
+                                        <button type="submit">{% trans 'Comment' %}</button>
                                     </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
-</section>
+    </section>
 {% endblock %}

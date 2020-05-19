@@ -8,14 +8,8 @@
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li class="active"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+                <li {% if request.resolver_match.url_name == 'index' %} class="active" {% endif %}><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
                 <li><a href="{% url 'tasks-explore' %}">{% trans 'Explore Tasks' %}</a></li>
-                <li class="drop-down"><a href="">{% trans 'About' %}</a>
-                    <ul>
-                        <li><a href="#">{% trans 'About App' %}</a></li>
-                        <li><a href="#">{% trans 'About Me' %}</a></li>
-                    </ul>
-                </li>
                 <li><a href="">{% trans 'Contact' %}</a></li>
 
             </ul>

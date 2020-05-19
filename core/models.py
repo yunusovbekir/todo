@@ -21,6 +21,7 @@ class Task(models.Model):
     class Meta:
         verbose_name = _("Task")
         verbose_name_plural = _("Tasks")
+        ordering = ('date_created',)
 
 
 class Permitted_User(models.Model):
@@ -59,3 +60,4 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _("Comment")
         verbose_name_plural = _("Comments")
+        ordering = ('comment_date',)
