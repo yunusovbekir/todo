@@ -96,8 +96,6 @@ DATABASES = {
     }
 }
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -148,7 +146,7 @@ else:
     ]
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'task/templates'),
+    os.path.join(BASE_DIR, 'templates'),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

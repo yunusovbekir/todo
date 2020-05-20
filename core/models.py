@@ -209,6 +209,22 @@ class WebsiteSettings(models.Model):
         _('Content on About me section'),
         blank=True,
     )
+    photo = models.ImageField(
+        _('Photo'),
+        upload_to='settings',
+        null=True,
+        blank=True,
+    )
+    full_name = models.CharField(
+        _('Full name'),
+        max_length=255,
+        default='Bakir Yunusov',
+    )
+    position = models.CharField(
+        _('Position'),
+        max_length=255,
+        default='Python Developer',
+    )
     google_map_API_key = models.CharField(
         _('Google Map API Key'),
         max_length=255,
@@ -247,6 +263,11 @@ class SocialAccounts(models.Model):
         _('I tag class name'),
         max_length=255,
         help_text=_('Example: bx bxl-facebook'),
+    )
+    i_tag_class_on_about_me = models.CharField(
+        _('I tag class name on About me section'),
+        max_length=255,
+        help_text=_("Example: icofont-facebook"),
     )
     target_blank = models.BooleanField(
         _('Target blank function'),
