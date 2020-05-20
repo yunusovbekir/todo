@@ -33,6 +33,7 @@ THIRD_PARTY_APPS = [
     'storages',
     'celery',
     'bootstrap_datepicker_plus',
+    'ckeditor',
 ]
 
 CUSTOM_APPS = [
@@ -95,6 +96,7 @@ DATABASES = {
     }
 }
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -169,8 +171,33 @@ else:
         "django.core.mail.backends.console.EmailBackend"
     )
 
+# Ckeditor config
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YouCustomToolbarConfig': [
+            {'name': 'document',
+             'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print',
+                       '-', ]},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Blockquote',
+                       'JustifyLeft', 'JustifyCenter',
+                       'JustifyRight', 'JustifyBlock', ]},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'youcustomtools', 'items': ['Preview', 'Maximize']},
+        ],
+    }
+}
 
 LOG_LEVEL = 'ERROR' if PROD else 'DEBUG'
 LOGGING = {

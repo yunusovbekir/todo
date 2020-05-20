@@ -3,6 +3,7 @@ from math import trunc
 from django import template
 from django.utils import timezone
 
+from core.models import Menu
 
 register = template.Library()
 
@@ -61,3 +62,8 @@ def get_datetime_difference_for_deadline(value):
             return "{} day(s), {} hour(s), {} minute(s) left.".format(
                 days, hours, minutes
             )
+
+
+@register.simple_tag
+def get_menu_items():
+    return Menu.objects.all()

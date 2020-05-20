@@ -1,17 +1,19 @@
-{% load i18n %}
+{% load i18n custom_tags %}
+{% get_menu_items as menus %}
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-        <h1 class="logo mr-auto"><a href="{% url 'index' %}">Mini To-Do App</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <h1 class="logo mr-auto"><a href="{% url 'index' %}">{% trans 'Mini To-Do App' %}</a></h1>
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li {% if request.resolver_match.url_name == 'index' %} class="active" {% endif %}><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-                <li><a href="{% url 'tasks-explore' %}">{% trans 'Explore Tasks' %}</a></li>
-                <li><a href="">{% trans 'Contact' %}</a></li>
-
+                {% for menu in menus %}
+                    {% if menu.position == 'Header' or menu.position == 'Both' %}
+                        <li>
+                            <a href="{{ menu.url }}">{{ menu.title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </nav>
 
