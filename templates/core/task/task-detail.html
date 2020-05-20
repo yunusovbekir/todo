@@ -18,7 +18,7 @@
                     {% if request.user == object.author %}
                     <div class="task-buttons-container d-flex justify-content-around">
                         <a href="{% url 'task-update' object.id %}" class="get-started-btn">{% trans 'Update Task' %}</a>
-                        <a href="{% url 'task-delete' object.id %}" class="get-started-btn">{% trans 'Delete Task' %}</a>
+                        <a href="{% url 'task-delete' object.id %}" class="delete-btn">{% trans 'Delete Task' %}</a>
                         <a href="{% url 'permitted-users' object.id %}" class="get-started-btn">{% trans 'Permitted Users' %}</a>
                     </div>
                     {% endif %}
