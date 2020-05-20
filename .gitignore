@@ -6,6 +6,7 @@ redisdb/
 *.log
 app/db.sqlite3
 app/media
+media/
 db/
 .gitattributes
 todo
