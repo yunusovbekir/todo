@@ -1,9 +1,7 @@
 from math import trunc
-
 from django import template
 from django.utils import timezone
-
-from core.models import Menu
+from core.models import Menu, Contact, WebsiteSettings
 
 register = template.Library()
 
@@ -67,3 +65,13 @@ def get_datetime_difference_for_deadline(value):
 @register.simple_tag
 def get_menu_items():
     return Menu.objects.all()
+
+
+@register.simple_tag
+def get_contact_items():
+    return Contact.objects.all()
+
+
+@register.simple_tag
+def get_settings():
+    return WebsiteSettings.objects.first()

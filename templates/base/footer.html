@@ -1,3 +1,7 @@
+{% load custom_tags i18n %}
+{% get_menu_items as menus %}
+{% get_contact_items as contact %}
+{% get_settings as settings %}
 <footer id="footer">
 
     <div class="footer-top">
@@ -5,56 +9,52 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-6 footer-contact">
-                    <h3>OnePage</h3>
+                    <h3>{% trans 'Mini To-Do App' %}</h3>
                     <p>
-                        A108 Adam Street <br>
-                        New York, NY 535022<br>
-                        United States <br><br>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
+                        {% for item in contact %}
+                            {% if item.type == 'Address' %}
+                                {{ item.content|safe }}
+                            {% endif %}
+                        {% endfor %}
+                        <br><br>
+                        {% for item in contact %}
+                            {% if item.type == 'Phone' %}
+                                <strong>{% trans 'Phone:' %}</strong>
+                                {{ item.content|safe }}<br>
+                            {% elif item.type == 'Email' %}
+                                <strong>{% trans 'Email:' %}</strong>
+                                {{ item.content|safe }}<br>
+                            {% endif %}
+                        {% endfor %}
                     </p>
                 </div>
 
                 <div class="col-lg-2 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
+                    <h4>{% trans 'Useful Links' %}</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a
-                                href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About
-                            us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a>
-                        </li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms
-                            of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy
-                            policy</a></li>
+                        {% for item in menus %}
+                            {% if item.positon == 'Useful Links' %}
+                                <li>
+                                    <i class="bx bx-chevron-right"></i>
+                                    <a href="{{ item.url }}">{{ item.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Our Services</h4>
+                    <h4>{% trans 'Menu' %}</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web
-                            Design</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web
-                            Development</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product
-                            Management</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a>
-                        </li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic
-                            Design</a></li>
+                        {% for item in menus %}
+                            {% if item.positon == 'Footer' or item.position == 'Both' %}
+                                <li>
+                                    <i class="bx bx-chevron-right"></i>
+                                    <a href="{{ item.url }}">{{ item.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
-                </div>
-
-                <div class="col-lg-4 col-md-6 footer-newsletter">
-                    <h4>Join Our Newsletter</h4>
-                    <p>Tamen quem nulla quae legam multos aute sint culpa legam
-                        noster magna</p>
-                    <form action="" method="post">
-                        <input type="email" name="email"><input type="submit"
-                                                                value="Subscribe">
-                    </form>
                 </div>
 
             </div>
@@ -65,24 +65,23 @@
 
         <div class="mr-md-auto text-center text-md-left">
             <div class="copyright">
-                &copy; Copyright <strong><span>OnePage</span></strong>. All
-                Rights Reserved
+                {% blocktrans %}
+                    &copy; Copyright
+                    <strong><span>Mini To-Do App</span></strong>. All Rights
+                    Reserved
+                {% endblocktrans %}
             </div>
             <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/ -->
-                Designed by <a
-                    href="https://bootstrapmade.com/">BootstrapMade</a>
+                {% trans 'Designed by' %} <a href="https://bootstrapmade.com/">BootstrapMade.</a>
+                {% trans 'Developed by' %} <a
+                    href="{{ settings.copyright_link }}">Bakir Yunusov</a>
             </div>
         </div>
         <div class="social-links text-center text-md-right pt-3 pt-md-0">
-            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            {% for account in settings.socialaccounts_set.all %}
+                <a href="{{ account.url }}" class="{{ account.a_tag_class }}"><i
+                        class="{{ account.i_tag_class }}"></i></a>
+            {% endfor %}
         </div>
     </div>
 </footer>
