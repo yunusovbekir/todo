@@ -6,6 +6,9 @@ from django.utils.translation import ugettext_lazy as _
 from ckeditor.fields import RichTextField
 
 
+# -----------------------------------------------------------------------------
+
+
 class Task(models.Model):
     title = models.CharField(
         _("Title"),
@@ -43,6 +46,9 @@ class Task(models.Model):
         ordering = ('date_created',)
 
 
+# -----------------------------------------------------------------------------
+
+
 class Permitted_User(models.Model):
     task = models.ForeignKey(
         Task,
@@ -68,6 +74,9 @@ class Permitted_User(models.Model):
     class Meta:
         verbose_name = _('Permitted User')
         verbose_name_plural = _('Permitted Users')
+
+
+# -----------------------------------------------------------------------------
 
 
 class Comment(models.Model):
@@ -97,6 +106,9 @@ class Comment(models.Model):
         verbose_name = _("Comment")
         verbose_name_plural = _("Comments")
         ordering = ('comment_date',)
+
+
+# -----------------------------------------------------------------------------
 
 
 class Contact_Message(models.Model):
@@ -131,6 +143,9 @@ class Contact_Message(models.Model):
         verbose_name = _('Message sent by a visitor')
         verbose_name_plural = _('Messages sent by visitors')
         ordering = ('-sent_date',)
+
+
+# -----------------------------------------------------------------------------
 
 
 class Menu(models.Model):
@@ -173,6 +188,9 @@ class Menu(models.Model):
         ordering = ('ordering',)
 
 
+# -----------------------------------------------------------------------------
+
+
 class Contact(models.Model):
 
     class ContactType(models.TextChoices):
@@ -195,6 +213,9 @@ class Contact(models.Model):
     class Meta:
         verbose_name = _('Contact')
         verbose_name_plural = _('Contacts')
+
+
+# -----------------------------------------------------------------------------
 
 
 class WebsiteSettings(models.Model):
@@ -242,6 +263,9 @@ class WebsiteSettings(models.Model):
     class Meta:
         verbose_name = _('Website Settings')
         verbose_name_plural = _('Website Settings')
+
+
+# -----------------------------------------------------------------------------
 
 
 class SocialAccounts(models.Model):

@@ -110,8 +110,10 @@ class TaskDisplayDetailView(
         ):
             context['is_allowed'] = True
 
-        context['comments'] = Comment.objects.all()
         context['comment_form'] = CommentForm()
+        context['comments'] = Comment.objects.filter(
+            task__id=self.kwargs.get('pk')
+        )
         return context
 
     def test_func(self):
@@ -186,6 +188,7 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 
     model = Task
     form_class = TaskForm
+    template_name = 'core/task/task-create-form.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -292,6 +295,10 @@ class PermittedUserAddView(
             user.username
             for user in User.objects.filter(is_active=True)
         ]
+
+        if username == self.request.user.username:
+            form.add_error('username', _("You can't add yourself to the list"))
+            return self.form_invalid(form)
 
         # if user is not found
         if username not in registered_users:

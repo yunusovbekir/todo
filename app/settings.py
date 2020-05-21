@@ -197,6 +197,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+
 LOG_LEVEL = 'ERROR' if PROD else 'DEBUG'
 LOGGING = {
     'version': 1,

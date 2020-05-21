@@ -16,16 +16,12 @@ from .views import (
     PermittedUserUpdateView,
 )
 
-
-urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-    path('contact/', ContactView.as_view(), name='contact'),
-    path('explore/', TaskListView.as_view(), name='tasks-explore'),
-    path('user/<str:username>/', UserTaskListView.as_view(), name='user-tasks'),
-    path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
+TASK_URL_PATTERNS = [
+    path('user/<str:username>/',
+         UserTaskListView.as_view(), name='user-tasks'),
     path('tasks/new/', TaskCreateView.as_view(), name='task-create'),
-    path('tasks/<int:pk>/update/',
-         TaskUpdateView.as_view(),
+    path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task-detail'),
+    path('tasks/<int:pk>/update/', TaskUpdateView.as_view(),
          name='task-update'),
     path('tasks/<int:pk>/delete/',
          TaskDeleteView.as_view(),
@@ -43,6 +39,12 @@ urlpatterns = [
          PermittedUserDeleteView.as_view(),
          name='permitted-user-delete'),
 ]
+
+urlpatterns = [
+    path('', IndexView.as_view(), name='index'),
+    path('contact/', ContactView.as_view(), name='contact'),
+    path('explore/', TaskListView.as_view(), name='tasks-explore'),
+] + TASK_URL_PATTERNS
 
 if settings.DEBUG:
     urlpatterns += static(

@@ -1,7 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 from celery import Celery
 # from celery.schedules import crontab
-import os, logging
+import os
+import logging
 from django.conf import settings
 
 logger = logging.getLogger("Celery")

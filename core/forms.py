@@ -2,11 +2,9 @@ from django import forms
 from .models import Task, Comment
 
 
-class DateTimeInput(forms.DateTimeInput):
-    input_formats = '%m/%d/%Y %H:%M'
-
-
 class TaskForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form-control', 'cols': '60'}))
 
     class Meta:
         model = Task
@@ -18,11 +16,6 @@ class TaskForm(forms.ModelForm):
         help_texts = {
             'deadline': 'Example: 2021-01-31 23:49:00'
         }
-        deadline = forms.DateField(
-            widget=forms.DateTimeInput(
-                attrs={'type': 'date'}
-            )
-        )
 
 
 class CommentForm(forms.ModelForm):
