@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from .views import (
     IndexView,
     ContactView,
+    ContactMessageView,
     TaskListView,
     TaskDetailView,
     TaskCreateView,
@@ -43,6 +44,7 @@ TASK_URL_PATTERNS = [
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('contact/', ContactView.as_view(), name='contact'),
+    path('contact-form/', ContactMessageView.as_view(), name='contact-form'),
     path('explore/', TaskListView.as_view(), name='tasks-explore'),
 ] + TASK_URL_PATTERNS
 

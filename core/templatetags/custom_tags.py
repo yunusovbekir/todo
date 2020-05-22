@@ -1,7 +1,7 @@
 from math import trunc
 from django import template
 from django.utils import timezone
-from core.models import Menu, Contact, WebsiteSettings
+from core.models import Menu, Contact, Website_Settings
 
 register = template.Library()
 
@@ -74,4 +74,4 @@ def get_contact_items():
 
 @register.simple_tag
 def get_settings():
-    return WebsiteSettings.objects.first()
+    return Website_Settings.objects.first()

@@ -218,7 +218,7 @@ class Contact(models.Model):
 # -----------------------------------------------------------------------------
 
 
-class WebsiteSettings(models.Model):
+class Website_Settings(models.Model):
     copyright_link = models.URLField(
         _('Link on copyright'),
     )
@@ -268,9 +268,9 @@ class WebsiteSettings(models.Model):
 # -----------------------------------------------------------------------------
 
 
-class SocialAccounts(models.Model):
+class Social_Accounts(models.Model):
     settings = models.ForeignKey(
-        WebsiteSettings,
+        Website_Settings,
         on_delete=models.CASCADE,
     )
     url = models.URLField()

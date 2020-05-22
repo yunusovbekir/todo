@@ -1,15 +1,16 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.contrib.auth import get_user_model
 from django.views import generic
 from django.utils.translation import ugettext as _
-from .models import Task, Comment, Permitted_User
+from .models import Task, Comment, Permitted_User, Contact_Message
 from .forms import (
     CommentForm,
     TaskForm,
     PermittedUserAddForm,
+    ContactMessageForm,
 )
 
 User = get_user_model()
@@ -20,10 +21,6 @@ User = get_user_model()
 
 class IndexView(generic.TemplateView):
     template_name = 'core/home/index.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = {}
-        return ctx
 
 # -----------------------------------------------------------------------------
 
@@ -438,5 +435,32 @@ class ContactView(generic.TemplateView):
     template_name = 'contact/index.html'
 
     def get_context_data(self, **kwargs):
-        ctx = {}
+        ctx = {
+            'form': ContactMessageForm(),
+        }
         return ctx
+
+
+# -----------------------------------------------------------------------------
+
+
+class ContactMessageView(generic.CreateView):
+    template_name = 'contact/index.html'
+    model = Contact_Message
+    form_class = ContactMessageForm
+    success_url = reverse_lazy('contact')
+
+    def form_valid(self, form):
+        if self.request.is_ajax():
+            'send_mail()'
+            obj = form.save(commit=False)
+            obj.forwarded_to_email = True
+            obj.save()
+            return JsonResponse({
+                'redirect_url': self.get_success_url()
+            })
+
+    def form_invalid(self, form):
+        super(ContactMessageView, self).form_invalid(form)
+        print(form.errors)
+        return JsonResponse({'info': form.errors})

@@ -5,9 +5,9 @@ from .models import (
     Permitted_User,
     Menu,
     Contact,
-    SocialAccounts,
-    WebsiteSettings,
-)
+    Social_Accounts,
+    Website_Settings,
+    Contact_Message)
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -23,16 +23,21 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 class SocialAccountStackInline(admin.StackedInline):
-    model = SocialAccounts
+    model = Social_Accounts
     extra = 1
 
 
 class WebsiteSettingsAdmin(admin.ModelAdmin):
-    model = WebsiteSettings
+    model = Website_Settings
     list_display = ('__str__',)
     inlines = (
         SocialAccountStackInline,
     )
+
+
+class ContactMessageAdmin(admin.ModelAdmin):
+    model = Contact_Message
+    list_display = ('name', 'email', 'subject',)
 
 
 admin.site.register(Task, TaskAdmin)
@@ -40,4 +45,5 @@ admin.site.register(Comment, CommentAdmin)
 admin.site.register(Permitted_User)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(Contact)
-admin.site.register(WebsiteSettings, WebsiteSettingsAdmin)
+admin.site.register(Website_Settings, WebsiteSettingsAdmin)
+admin.site.register(Contact_Message, ContactMessageAdmin)

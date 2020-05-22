@@ -204,6 +204,31 @@
   }
   aos_init();
 
+  $('#contact-form').submit(function (e) {
+  e.preventDefault();
+  console.log('first');
+  $.ajax({
+      type: $(this).attr('method'),
+      url: $(this).attr('action'),
+      data: $(this).serialize(),
+      success: function (data) {
+        console.log('second');
+          if (data.info) {
+                    console.log('third');
+                    console.log(data);
+              $('#contact-form #id_name .validate').text(data.info.name);
+              $('#contact-form .validate').css('display','block');
+          } else {
+              window.location.replace(data.redirect_url)
+          }
+      },
+      error: function (xhr, errmsg, err) {
+          console.log(xhr.status + ": " + xhr.responseText);
+      }
+  });
+  return false;
+});
+
 })(jQuery);
 
 
