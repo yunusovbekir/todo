@@ -448,7 +448,9 @@ class ContactMessageView(generic.CreateView):
     template_name = 'contact/index.html'
     model = Contact_Message
     form_class = ContactMessageForm
-    success_url = reverse_lazy('contact')
+
+    def get_success_url(self):
+        return reverse('contact')
 
     def form_valid(self, form):
         if self.request.is_ajax():
@@ -462,5 +464,4 @@ class ContactMessageView(generic.CreateView):
 
     def form_invalid(self, form):
         super(ContactMessageView, self).form_invalid(form)
-        print(form.errors)
         return JsonResponse({'info': form.errors})

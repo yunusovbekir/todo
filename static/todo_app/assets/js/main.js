@@ -204,22 +204,30 @@
   }
   aos_init();
 
+  // Contact Form
   $('#contact-form').submit(function (e) {
   e.preventDefault();
-  console.log('first');
+  $('#contact-form .validate').text('');
+
   $.ajax({
       type: $(this).attr('method'),
       url: $(this).attr('action'),
       data: $(this).serialize(),
       success: function (data) {
-        console.log('second');
           if (data.info) {
-                    console.log('third');
-                    console.log(data);
-              $('#contact-form #id_name .validate').text(data.info.name);
+            if (data.info.name){
+              $('#contact-form #name-error').text(data.info.name[0]);
+            }
+            if (data.info.email){
+              $('#contact-form #email-error').text(data.info.email[0]);
+            }
+            if (data.info.subject){
+              $('#contact-form #subject-error').text(data.info.subject[0]);
+            }
               $('#contact-form .validate').css('display','block');
           } else {
-              window.location.replace(data.redirect_url)
+              $('#contact-form')[0].reset();
+              $('#contact-form .sent-message').css('display', 'block');
           }
       },
       error: function (xhr, errmsg, err) {

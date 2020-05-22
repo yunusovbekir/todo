@@ -1598,7 +1598,7 @@ section {
 .email-form .validate {
   display: none;
   color: red;
-  margin: 0 0 15px 0;
+  margin: 0 0 0 10px;
   font-weight: 400;
   font-size: 13px;
 }
@@ -1615,10 +1615,11 @@ section {
 .email-form .sent-message {
   display: none;
   color: #fff;
-  background: #18d26e;
+  background: #36a832;
   text-align: center;
   padding: 15px;
   font-weight: 600;
+  border-radius: 4px;
 }
 
 .email-form .loading {

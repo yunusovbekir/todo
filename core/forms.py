@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import Task, Comment, Contact_Message
 
 
@@ -46,7 +47,6 @@ class PermittedUserAddForm(forms.Form):
 
 
 class ContactMessageForm(forms.ModelForm):
-
     class Meta:
         model = Contact_Message
         fields = (
@@ -62,7 +62,7 @@ class ContactMessageForm(forms.ModelForm):
                     'placeholder': 'Your Name',
                 },
             ),
-            'email': forms.TextInput(
+            'email': forms.EmailInput(
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Your Email',
@@ -84,8 +84,27 @@ class ContactMessageForm(forms.ModelForm):
         }
 
     def clean_name(self):
+        """
+        Name should contain alphabet and whitespace only.
+        Otherwise raise validation error.
+        """
         name = self.cleaned_data.get('name')
-        for char in name:
-            if not char.isalpha():
-                raise forms.ValidationError('Error occurred babe.')
+        if any([
+            letter for letter in name if not letter.isalpha()
+            and not letter.isspace()
+        ]):
+            raise forms.ValidationError(_(
+                'Are you sure you entered your name correctly?'
+            ))
         return name
+
+    def clean_subject(self):
+        """
+        Entered subject should have at least 6 character of length
+        """
+        subject = self.cleaned_data.get('subject')
+        if len(subject) < 6:
+            raise forms.ValidationError(_(
+                'Please enter at least 6 chars of subject.'
+            ))
+        return subject
