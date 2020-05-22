@@ -36,7 +36,9 @@
 
     {% block content %}{% endblock %}
 
+    {% if request.resolver_match.url_name != 'password-reset-done' %}
     {% include 'base/footer.html' %}
+    {% endif %}
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>

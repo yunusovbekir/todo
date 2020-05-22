@@ -5,6 +5,7 @@ from django.views import View
 from django.contrib.auth import get_user_model
 from django.views import generic
 from django.utils.translation import ugettext as _
+from django.core.mail import send_mail, BadHeaderError
 from .models import Task, Comment, Permitted_User, Contact_Message
 from .forms import (
     CommentForm,
@@ -454,14 +455,45 @@ class ContactMessageView(generic.CreateView):
 
     def form_valid(self, form):
         if self.request.is_ajax():
-            'send_mail()'
-            obj = form.save(commit=False)
-            obj.forwarded_to_email = True
-            obj.save()
-            return JsonResponse({
-                'redirect_url': self.get_success_url()
-            })
+
+            # get form data
+            name = form.cleaned_data.get('name')
+            message = form.cleaned_data.get('message')
+            subject = form.cleaned_data.get('subject')
+            from_email = form.cleaned_data.get('email')
+
+            # custom message
+            message = _(
+                'You have a message from {name}.\n'
+                'Email: {email}. \n'
+                'Message:\n{message}'.format(
+                    name=name,
+                    email=from_email,
+                    message=message,
+                ))
+            try:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=from_email,
+                    recipient_list=['yunusovbekir@gmail.com'],
+                    fail_silently=False,
+                )
+                obj = form.save(commit=False)
+                obj.forwarded_to_email = True
+                obj.save()
+                return JsonResponse({
+                    'redirect_url': self.get_success_url()
+                })
+
+            except BadHeaderError:
+                """ Invalid header. """
+                return HttpResponseRedirect(reverse('contact'))
 
     def form_invalid(self, form):
         super(ContactMessageView, self).form_invalid(form)
         return JsonResponse({'info': form.errors})
+
+
+class EmailTemplateTestView(generic.TemplateView):
+    template_name = 'email-template.html'

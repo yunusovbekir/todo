@@ -166,7 +166,7 @@ if DEBUG:
     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD", "fpbivjpbskawsxws")
 else:
     EMAIL_BACKEND = (
-        "django.core.mail.backends.console.EmailBackend"
+        "django.core.mail.backends.console.EmailBackend",
     )
 
 # Ckeditor config
