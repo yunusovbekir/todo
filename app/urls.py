@@ -15,3 +15,10 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
+
+handler404 = 'core.views.handler404'
+handler500 = 'core.views.handler500'
+
+admin.site.site_header = 'Mini To-Do App Admin'
+admin.site.site_title = 'Mini To-Do App Administration'
+admin.site.index_title = 'Mini To-Do App Administration'

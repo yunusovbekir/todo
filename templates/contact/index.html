@@ -1,5 +1,5 @@
 {% extends 'base/index.html' %}
-{% load i18n custom_tags crispy_forms_tags %}
+{% load i18n custom_tags %}
 
 
 {% block title %}
@@ -16,8 +16,8 @@
             <h2>{% trans 'Contact' %}</h2>
         </div>
         <div>
-            <iframe width="600" height="450" frameborder="0" style="border:0"
-                    src="https://www.google.com/maps/embed/v1/place?q=place_id:{{ settings.google_map_location_id }}&key={{ settings.google_map_api_key }}" allowfullscreen>
+            <iframe style="border:0; width: 100%; height: 270px;"
+                    src="https://www.google.com/maps/embed/v1/place?q=place_id:{{ settings.google_map_location_id }}&key={{ settings.google_map_API_key }}" allowfullscreen>
             </iframe>
         </div>
         <div class="row mt-5">

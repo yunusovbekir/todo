@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from core.models import Task
 
@@ -21,26 +23,6 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
-# @login_required
-# def profile(request):
-#     if request.method == "POST":
-#         u_form = UserUpdateForm(request.POST, instance=request.user)  # error
-#
-#         if u_form.is_valid():
-#             u_form.save()
-#             messages.success(request, 'Your profile has been updated')
-#             return redirect('profile')
-#
-#     else:
-#         u_form = UserUpdateForm(instance=request.user)
-#
-#     context = {
-#         'u_form': u_form
-#     }
-#
-#     return render(request, 'users/profile.html', context)
-
-
 class ProfileView(
     LoginRequiredMixin, generic.TemplateView
 ):
@@ -50,8 +32,20 @@ class ProfileView(
         tasks = Task.objects.filter(author=self.request.user)
         context = {
             'object': get_user_model().objects.get(id=self.request.user.id),
+            'form': UserUpdateForm(instance=self.request.user),
             'tasks': tasks,
             'task_count': tasks.count(),
-            'form': UserUpdateForm(instance=self.request.user)
         }
         return context
+
+
+class ProfileUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
+):
+    model = get_user_model()
+    form_class = UserUpdateForm
+    template_name = 'users/profile.html'
+    success_url = reverse_lazy('profile')
+
+    def test_func(self):
+        return self.request.user.id == self.kwargs.get('pk')

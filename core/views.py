@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.contrib.auth import get_user_model
@@ -497,3 +498,19 @@ class ContactMessageView(generic.CreateView):
 
 class EmailTemplateTestView(generic.TemplateView):
     template_name = 'email-template.html'
+
+
+class ErrorView(generic.TemplateView):
+    template_name = '404.html'
+
+
+def handler404(request, exception):
+    response = render(request, "404.html", context={})
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render(request, "404.html", context={})
+    response.status_code = 500
+    return response

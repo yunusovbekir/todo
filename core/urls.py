@@ -16,6 +16,7 @@ from .views import (
     PermittedUserAddView,
     PermittedUserUpdateView,
     EmailTemplateTestView,
+    ErrorView,
 )
 
 TASK_URL_PATTERNS = [
@@ -45,6 +46,7 @@ TASK_URL_PATTERNS = [
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('email/', EmailTemplateTestView.as_view(), name='email'),
+    path('error/', ErrorView.as_view(), name='error'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('contact-form/', ContactMessageView.as_view(), name='contact-form'),
     path('explore/', TaskListView.as_view(), name='tasks-explore'),

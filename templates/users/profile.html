@@ -8,13 +8,15 @@
 {% block content %}
     <section id="profile">
         <div class="container emp-profile">
-            <form method="post">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="profile-head">
-                            <h5 class="d-flex justify-content-center">
+                            <h4 class="d-flex justify-content-center">
+                                {% trans 'Your Profile' %}
+                            </h4>
+                            <h6 class="d-flex justify-content-center">
                                 {{ object.username }}
-                            </h5>
+                            </h6>
                             <br>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -62,7 +64,8 @@
                                                 {{ object.first_name }}
                                             {% else %}
                                                 {% trans 'Not provided' %}
-                                            {% endif %}</p>
+                                            {% endif %}
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -75,7 +78,8 @@
                                                 {{ object.last_name }}
                                             {% else %}
                                                 {% trans 'Not provided' %}
-                                            {% endif %}</p>
+                                            {% endif %}
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -156,12 +160,10 @@
                                                     </div>
                                                     <div class="comment-form">
                                                         <div data-aos="fade-up">
-                                                            <form method="post" role="form"
-                                                                  class="email-form">
+                                                            <form id="profile-form" action="{% url 'profile-update' object.id %}" method="post" role="form" class="email-form">
                                                                 {% csrf_token %}
                                                                 <div class="form-group">
                                                                     {{ form|crispy }}
-                                                                    <div class="validate"></div>
                                                                 </div>
                                                                 <div class="text-center">
                                                                     <button class="get-started-btn" type="submit">{% trans 'Update' %}</button>
@@ -186,7 +188,6 @@
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </section>
 {% endblock %}
