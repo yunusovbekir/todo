@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from ckeditor.fields import RichTextField
+
+
+User = get_user_model()
 
 
 # -----------------------------------------------------------------------------
@@ -39,6 +42,10 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse('task-detail', kwargs={'pk': self.pk})
+
+    def __init__(self, *args, **kwargs):
+        super(Task, self).__init__(*args, **kwargs)
+        self.cache_deadline = self.deadline
 
     class Meta:
         verbose_name = _("Task")
@@ -150,10 +157,10 @@ class Contact_Message(models.Model):
 
 class Menu(models.Model):
     class PositionChoices(models.TextChoices):
-        HEADER = _("Header")
-        FOOTER = _("Footer")
-        BOTH = _("Both")
-        USEFUL_LINKS = _("Useful Links")
+        HEADER = 1
+        FOOTER = 2
+        BOTH = 3
+        USEFUL_LINKS = 4
 
     title = models.CharField(
         _('Title'),
@@ -168,6 +175,7 @@ class Menu(models.Model):
         _('Position'),
         max_length=50,
         choices=PositionChoices.choices,
+        help_text='1 => Header\n 2 => Footer \n 3 => Both \n 4 => Useful Links'
     )
     ordering = models.PositiveIntegerField(
         _('Ordering'),
@@ -245,6 +253,14 @@ class Website_Settings(models.Model):
         _('Position'),
         max_length=255,
         default='Python Developer',
+    )
+    notification_text_on_time = models.TextField(
+        _("Notification Text"),
+        default='You have 10 minutes left to finish your task.'
+    )
+    notification_text_less_ten_min = models.TextField(
+        _("Notification Text"),
+        default='You have less 10 minutes left to finish your task.'
     )
     google_map_API_key = models.CharField(
         _('Google Map API Key'),

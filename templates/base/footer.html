@@ -3,11 +3,9 @@
 {% get_contact_items as contact %}
 {% get_settings as settings %}
 <footer id="footer">
-
     <div class="footer-top">
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-3 col-md-6 footer-contact">
                     <h3>{% trans 'Mini To-Do App' %}</h3>
                     <p>
@@ -28,12 +26,11 @@
                         {% endfor %}
                     </p>
                 </div>
-
                 <div class="col-lg-2 col-md-6 footer-links">
                     <h4>{% trans 'Useful Links' %}</h4>
                     <ul>
                         {% for item in menus %}
-                            {% if item.positon == 'Useful Links' %}
+                            {% if item.position == '4' %}
                                 <li>
                                     <i class="bx bx-chevron-right"></i>
                                     <a href="{{ item.url }}">{{ item.title }}</a>
@@ -42,12 +39,11 @@
                         {% endfor %}
                     </ul>
                 </div>
-
                 <div class="col-lg-3 col-md-6 footer-links">
                     <h4>{% trans 'Menu' %}</h4>
                     <ul>
                         {% for item in menus %}
-                            {% if item.positon == 'Footer' or item.position == 'Both' %}
+                            {% if item.position == '2' or item.position == '3' %}
                                 <li>
                                     <i class="bx bx-chevron-right"></i>
                                     <a href="{{ item.url }}">{{ item.title }}</a>
@@ -56,13 +52,11 @@
                         {% endfor %}
                     </ul>
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="container d-md-flex py-4">
-
         <div class="mr-md-auto text-center text-md-left">
             <div class="copyright">
                 {% blocktrans %}
@@ -78,7 +72,7 @@
             </div>
         </div>
         <div class="social-links text-center text-md-right pt-3 pt-md-0">
-            {% for account in settings.socialaccounts_set.all %}
+            {% for account in settings.social_accounts_set.all %}
                 <a href="{{ account.url }}" class="{{ account.a_tag_class }}"><i
                         class="{{ account.i_tag_class }}"></i></a>
             {% endfor %}

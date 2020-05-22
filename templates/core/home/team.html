@@ -17,7 +17,7 @@
                         <img src="{{ settings.photo.url }}"
                              class="img-fluid" alt="">
                         <div class="social">
-                            {% for account in settings.socialaccounts_set.all %}
+                            {% for account in settings.social_accounts_set.all %}
                                 <a {% if account.target_blank %}
                                     target="_blank" {% endif %}
                                     href="{{ account.url }}">

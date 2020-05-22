@@ -16,6 +16,8 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = "users.MyUser"
+
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

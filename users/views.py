@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic

@@ -9,7 +9,7 @@
         <nav class="nav-menu d-none d-lg-block">
             <ul>
                 {% for menu in menus %}
-                    {% if menu.position == 'Header' or menu.position == 'Both' %}
+                    {% if menu.position == '1' or menu.position == '3' %}
                         <li>
                             <a href="{{ menu.url }}">{{ menu.title }}</a>
                         </li>
