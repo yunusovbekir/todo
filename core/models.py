@@ -254,11 +254,7 @@ class Website_Settings(models.Model):
         max_length=255,
         default='Python Developer',
     )
-    notification_text_on_time = models.TextField(
-        _("Notification Text"),
-        default='You have 10 minutes left to finish your task.'
-    )
-    notification_text_less_ten_min = models.TextField(
+    notification_text = models.TextField(
         _("Notification Text"),
         default='You have less 10 minutes left to finish your task.'
     )

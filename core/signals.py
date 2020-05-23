@@ -26,31 +26,46 @@ def send_notification(sender, **kwargs):
     if instance.deadline != instance.cache_deadline:
         instance.cache_deadline = instance.deadline
         settings = Website_Settings.objects.first()
-        text_on_time = settings.notification_text_on_time
-        text_less_ten_minutes = settings.notification_text_less_ten_min
+        notification_text = settings.notification_text
 
         # get difference between deadline and current datetime
         delta = instance.deadline - timezone.now()
 
         # notification must be sent 10 minutes before the time is over
-        countdown = delta.total_seconds() - (60 * 10)
+        time_left_to_deadline = delta.total_seconds()
 
         from_email = 'yunusovbekir@gmail.com'
         to_email = instance.author.email
         subject = _('Task notification - {}'.format(instance.title))
-        if countdown:
-            msg = _('{}\n'
-                    'Task details:\n'
-                    'Title: {}\n'
-                    'Description: {}\n'
-                    'Deadline: {}\n'.
-                    format(text_on_time,
-                           instance.title,
-                           instance.description,
-                           instance.deadline)
-                    )
+        print('time_left_to_deadline: ', time_left_to_deadline)
+        msg = _('{}\n'
+                'Task details:\n'
+                'Title: {}\n'
+                'Description: {}\n'
+                'Deadline: {}\n'.
+                format(notification_text,
+                       instance.title,
+                       instance.description,
+                       instance.deadline)
+                )
+
+        if 60 <= time_left_to_deadline <= 605:
+            # if the deadline is set for less than 10 minutes
+            # notify immediately
 
             notify.apply_async(
                 (subject, msg, from_email, to_email),
-                countdown=countdown
+                countdown=5,
             )
+        elif time_left_to_deadline > 605:
+            countdown = time_left_to_deadline - 60 * 10
+            if countdown > 0:
+                notify.apply_async(
+                    (subject, msg, from_email, to_email),
+                    countdown=countdown,
+                )
+            else:
+                notify.apply_async(
+                    (subject, msg, from_email, to_email),
+                    countdown=5,
+                )

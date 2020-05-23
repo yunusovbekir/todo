@@ -36,6 +36,7 @@ THIRD_PARTY_APPS = [
     'celery',
     'bootstrap_datepicker_plus',
     'ckeditor',
+    'django_celery_beat',
 ]
 
 CUSTOM_APPS = [
