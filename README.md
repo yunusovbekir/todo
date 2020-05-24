@@ -4,7 +4,7 @@ This is a mini, modest to-do app that I have built to show my basic skills.
 ## Details about the app
 1. User can register on the app, can update his/her information.
 2. User can create a task, set a deadline, update the task, delete the task.
-3. Give permission other users to either only read or read and comment on the task by adding username.
+3. Give permission other users by adding their username to either only read or read and comment on the task.
 4. Users can comment on a task (if he/she is allowed)
 5. Task owner receive a notification email if less than 10 minutes left for the deadline. `Celery`
 6. While CORE app models are stored on MySQL database, other apps' models are stored on a Postgres database. `Django multi-database`
