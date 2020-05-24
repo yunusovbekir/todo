@@ -8,13 +8,11 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get("DEBUG", False)
 PROD = not DEBUG
-# DEBUG = True
-# PROD = not DEBUG
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "users.MyUser"
 
@@ -194,7 +192,7 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
-if DEBUG:
+if DEBUG:  # change to PROD when in prod environment
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST_USER = os.environ.get("EMAIL_USER", "yunusovbekir@gmail.com")
     EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")

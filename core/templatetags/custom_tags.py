@@ -6,6 +6,21 @@ from core.models import Menu, Contact, Website_Settings
 register = template.Library()
 
 
+@register.simple_tag
+def get_menu_items():
+    return Menu.objects.all()
+
+
+@register.simple_tag
+def get_contact_items():
+    return Contact.objects.all()
+
+
+@register.simple_tag
+def get_settings():
+    return Website_Settings.objects.first()
+
+
 @register.filter
 def get_datetime_difference_for_comment(value):
     """
@@ -60,18 +75,3 @@ def get_datetime_difference_for_deadline(value):
             return "{} day(s), {} hour(s), {} minute(s) left.".format(
                 days, hours, minutes
             )
-
-
-@register.simple_tag
-def get_menu_items():
-    return Menu.objects.all()
-
-
-@register.simple_tag
-def get_contact_items():
-    return Contact.objects.all()
-
-
-@register.simple_tag
-def get_settings():
-    return Website_Settings.objects.first()
