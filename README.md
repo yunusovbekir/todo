@@ -1,4 +1,4 @@
-# todo
+# Mini To-Do App
 This is a mini, modest to-do app that I have built to show my basic skills.
 
 ## Details about the app
