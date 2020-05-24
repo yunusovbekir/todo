@@ -16,5 +16,5 @@ This is a mini, modest to-do app that I have built to show my basic skills.
 12. Contact form is written with `Ajax` and submitted message is sent to my email and saved to database. `django send_mail`
 13. `CI/CD tool` is used for development (will be ready)
 14. `Unit testing` (will be ready)
-15. Files are stored on an `AWS S3 Storage Service` (will be ready)
+15. Files are stored on `AWS S3 Storage Service` (will be ready)
 16. App will deployed on Heroku ;)
