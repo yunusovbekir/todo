@@ -111,6 +111,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+
+.button-more{
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -1874,6 +1883,29 @@ section {
 
 .comment-box {
   padding: 10px;
+}
+
+.comment-box .comment-wrapper{
+  position: relative;
+}
+
+.comment-box .comment-wrapper .more-info{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  
+}
+
+.comment-box .comment-wrapper .button-more{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+}
+
+.comment-box .comment-wrapper .button-more i {
+  font-size: 19px;
 }
 
 .comment-box span {
