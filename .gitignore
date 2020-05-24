@@ -1,12 +1,11 @@
 postgredb/
+mysqldb/
 redisdb/
 .venv/
 .idea/
 *.pyc
 *.log
-app/db.sqlite3
-app/media
+db.sqlite3
 media/
 db/
-.gitattributes
 todo
