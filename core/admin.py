@@ -1,21 +1,16 @@
 from django.contrib import admin
 from .models import (
-    Task,
-    Comment,
-    Permitted_User,
     Menu,
     Contact,
     Social_Accounts,
     Website_Settings,
-    Contact_Message)
+    Contact_Message,
+    Portfolio,
+)
 
 
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ("title", "author",)
-
-
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ("username", "task", "comment_date")
+class PortfolioAdmin(admin.ModelAdmin):
+    list_display = ('title', 'ordering', 'status', 'url',)
 
 
 class MenuAdmin(admin.ModelAdmin):
@@ -40,10 +35,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject',)
 
 
-admin.site.register(Task, TaskAdmin)
-admin.site.register(Comment, CommentAdmin)
-admin.site.register(Permitted_User)
-admin.site.register(Menu, MenuAdmin)
 admin.site.register(Contact)
+admin.site.register(Menu, MenuAdmin)
 admin.site.register(Website_Settings, WebsiteSettingsAdmin)
 admin.site.register(Contact_Message, ContactMessageAdmin)
+admin.site.register(Portfolio, PortfolioAdmin)

@@ -6,10 +6,10 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY", 'fwki09_x7z@vwb3=)egz_f==)jcj485-smpo+qp&^$7nct+s(1'
 )
 
-# DEBUG = not os.environ.get("DEBUG", False)
-# PROD = not DEBUG
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", False)
 PROD = not DEBUG
+# DEBUG = True
+# PROD = not DEBUG
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -43,6 +43,7 @@ THIRD_PARTY_APPS = [
 CUSTOM_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'task.apps.TaskConfig',
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + CUSTOM_APPS + DJANGO_APPS
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -89,9 +91,10 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {},
+    'db_default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB', "db_name"),
+        'NAME': os.environ.get('POSTGRES_DB', "db_default"),
         'USER': os.environ.get('POSTGRES_USER', "db_user"),
         'PASSWORD': os.environ.get(
             'POSTGRES_PASSWORD',
@@ -99,10 +102,35 @@ DATABASES = {
         ),
         'HOST': os.environ.get('POSTGRES_HOST', "localhost"),
         'PORT': os.environ.get('POSTGRES_PORT', 5432),
+    },
+    'db_mysql': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_DATABASE', "db_mysql"),
+        'USER': os.environ.get('MYSQL_USER', "db_user"),
+        'PASSWORD': os.environ.get(
+            'MYSQL_PASSWORD',
+            "tpsAfAQPLvYkhBuztctVB9ath8ejP2yDNmUszFbsK5stg7g29QEcQMKDc3yBR9B5"
+        ),
+        'HOST': os.environ.get('MYSQL_HOST', "127.0.0.1"),
+        'PORT': os.environ.get('MYSQL_PORT', 3306),
     }
 }
 
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+DATABASE_ROUTERS = ['app.routers.DbRouter']
+
+DATABASE_APPS_MAPPING = {
+    "users": "db_default",
+    'auth': "db_default",
+    'admin': "db_default",
+    'contenttypes': "db_default",
+    'sessions': "db_default",
+    'sites': "db_default",
+    'social_django': "db_default",
+    'flatpages': "db_default",
+    'django_celery': "db_default",
+    "task": "db_default",
+    "core": "db_mysql",
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -164,6 +192,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -182,8 +211,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.yahoo.YahooOpenId',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 

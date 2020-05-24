@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('', include('users.urls')),
     path('', include('social_django.urls', namespace='social')),
+    path('tasks/', include('task.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

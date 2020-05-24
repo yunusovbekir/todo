@@ -1,118 +1,44 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from ckeditor.fields import RichTextField
-
 
 User = get_user_model()
 
 
-# -----------------------------------------------------------------------------
-
-
-class Task(models.Model):
+class Portfolio(models.Model):
     title = models.CharField(
-        _("Title"),
-        max_length=100,
-    )
-    author = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name=_('Author'),
+        _('Title'),
+        max_length=255,
     )
     description = RichTextField(
         _("Description"),
-        max_length=300,
-        blank=False,
-        null=False,
     )
-    date_created = models.DateTimeField(
-        _('Date created'),
-        default=timezone.now
+    photo = models.ImageField(
+        _("Photo"),
     )
-    deadline = models.DateTimeField(
-        _("Deadline"),
-        default=timezone.now,
+    photo_detail_page = models.ImageField(
+        _("Photo on detail page"),
     )
+    url = models.URLField()
+    date = models.DateField(
+        _("Date"),
+        blank=True,
+    )
+    ordering = models.PositiveIntegerField(
+        _('Ordering'),
+        default=1,
+    )
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('task-detail', kwargs={'pk': self.pk})
-
-    def __init__(self, *args, **kwargs):
-        super(Task, self).__init__(*args, **kwargs)
-        self.cache_deadline = self.deadline
-
     class Meta:
-        verbose_name = _("Task")
-        verbose_name_plural = _("Tasks")
-        ordering = ('date_created',)
-
-
-# -----------------------------------------------------------------------------
-
-
-class Permitted_User(models.Model):
-    task = models.ForeignKey(
-        Task,
-        on_delete=models.CASCADE,
-        verbose_name=_('Task'),
-    )
-    read_only_users = models.ManyToManyField(
-        User,
-        related_name='read_only_users',
-        blank=True,
-        verbose_name=_("Read-only users"),
-    )
-    comment_allowed_users = models.ManyToManyField(
-        User,
-        related_name='comment_allowed_users',
-        blank=True,
-        verbose_name=_("Comment-allowed users"),
-    )
-
-    def __str__(self):
-        return self.task.title
-
-    class Meta:
-        verbose_name = _('Permitted User')
-        verbose_name_plural = _('Permitted Users')
-
-
-# -----------------------------------------------------------------------------
-
-
-class Comment(models.Model):
-    username = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name=_("Username"),
-
-    )
-    comment_content = models.TextField(
-        _('Comment content'),
-    )
-    task = models.ForeignKey(
-        Task,
-        on_delete=models.CASCADE,
-        verbose_name=_("Task"),
-    )
-    comment_date = models.DateTimeField(
-        _('Comment date'),
-        default=timezone.now,
-    )
-
-    def __str__(self):
-        return "{}".format(self.comment_content)
-
-    class Meta:
-        verbose_name = _("Comment")
-        verbose_name_plural = _("Comments")
-        ordering = ('comment_date',)
+        verbose_name = _('Portfolio')
+        verbose_name_plural = _('Portfolios')
+        ordering = ('ordering',)
 
 
 # -----------------------------------------------------------------------------

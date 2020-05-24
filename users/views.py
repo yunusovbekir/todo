@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from core.models import Task
+from task.models import Task
 
 from .forms import UserRegisterForm, UserUpdateForm
 

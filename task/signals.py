@@ -2,7 +2,8 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from .models import Task, Permitted_User, Website_Settings
+from .models import Task, Permitted_User
+from core.models import Website_Settings
 from .tasks import notify
 
 
