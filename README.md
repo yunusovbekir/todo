@@ -1,5 +1,5 @@
 # todo
-This is a mini to-do app
+This is a mini, modest to-do app that I have built to show my basic skills.
 
 ## Details about the app
 1. User can register on the app. Can update his/her information.
