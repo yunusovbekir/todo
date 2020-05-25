@@ -45,8 +45,13 @@
                                     <h6 class="comment-content">
                                         <a href="{% url 'user-tasks' item.username %}">{{ item.username.username }}: </a>{{ item.comment_content }}
                                     </h6>
-                                    <button class="button-more"><i class='bx bx-dots-vertical-rounded'></i></button>
-                                    <div class="more-info">Lorem</div>
+                                    <button
+                                            class="button-more"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                    >
+                                        <i class='bx bx-dots-vertical-rounded'></i>
+                                    </button>
                                 </div>
                                     <span>{{ item.comment_date|get_datetime_difference_for_comment }}</span>
                                 </div>
