@@ -10,6 +10,8 @@ from .views import (
     PermittedUserDeleteView,
     PermittedUserAddView,
     PermittedUserUpdateView,
+    CommentUpdateView,
+    CommentDeleteView,
 )
 
 
@@ -33,4 +35,9 @@ urlpatterns = [
     path('<int:pk>/permitted-users/delete/<str:username>/',
          PermittedUserDeleteView.as_view(),
          name='permitted-user-delete'),
+
+    path('<int:pk>/comment/<int:comment_id>/update/',
+         CommentUpdateView.as_view(), name='comment-update',),
+    path('<int:pk>/comment/<int:comment_id>/delete/',
+         CommentDeleteView.as_view(), name='comment-delete'),
 ]

@@ -158,6 +158,56 @@ class CommentView(
 # -----------------------------------------------------------------------------
 
 
+class CommentUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
+):
+    template_name = 'task/comment-update.html'
+    fields = ('comment_content',)
+
+    def get_object(self, queryset=None):
+        return Comment.objects.get(id=self.kwargs.get('comment_id'))
+
+    def get_success_url(self):
+        return reverse('task-detail', kwargs={'pk': self.kwargs.get('pk')})
+
+    def test_func(self):
+        obj = self.get_object()
+        user = self.request.user
+        return user == obj.username
+
+
+# -----------------------------------------------------------------------------
+
+
+class CommentDeleteView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
+):
+    model = Comment
+    template_name = 'task/comment-delete.html'
+
+    def get_object(self, queryset=None):
+        return Comment.objects.get(id=self.kwargs.get('comment_id'))
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentDeleteView, self).get_context_data(**kwargs)
+        context['task_id'] = self.kwargs.get('pk')
+        return context
+
+    def get_success_url(self):
+        return reverse(
+            'task-detail',
+            kwargs={'pk': self.kwargs.get('pk')},
+        )
+
+    def test_func(self):
+        obj = self.get_object()
+        user = self.request.user
+        return user == obj.username or user == obj.task.author
+
+
+# -----------------------------------------------------------------------------
+
+
 class TaskDetailView(View):
     """ Combine `TaskDisplayDetailView` and `CommentView` """
 

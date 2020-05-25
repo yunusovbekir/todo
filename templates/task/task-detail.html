@@ -48,7 +48,18 @@
                                     <button
                                             class="button-more"
                                             data-toggle="tooltip"
-                                            data-placement="top"
+                                            data-html="true"
+                                            title="<div class='tooltip-wrapper'>
+                                                     <ul>
+                                                     {% if request.user == item.username %}
+                                                        <li><a href='{% url 'comment-update' task.id item.id %}'>Edit</a></li>
+                                                    {% endif %}
+                                                    {% if request.user == task.author or request.user == item.username %}
+                                                        <li><a href='{% url 'comment-delete' task.id item.id %}'>Delete</a></li>
+                                                    {% endif %}
+                                                        <li><a href=''>Report</a></li>
+                                                     </ul>
+                                                   </div>"
                                     >
                                         <i class='bx bx-dots-vertical-rounded'></i>
                                     </button>
@@ -63,6 +74,7 @@
                                 </div>
                             </div>
                         {% endif %}
+                        {% if request.user == task.author or is_allowed %} <!-- Check user is owner or user is allowed to comment -->
                         <div class="comment-form">
                             <div data-aos="fade-up">
                                 <form method="post" role="form"
@@ -84,6 +96,7 @@
                                 </form>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                     </div>
                 </div>

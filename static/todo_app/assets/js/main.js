@@ -236,12 +236,17 @@
   });
   return false;
 });
+  //
+  // $(function () {
+  // $('[data-toggle="tooltip"]').tooltip({
+  //       title: "<div class='tooltip-wrapper'><ul><li><a href=''>Edit</a></li><li><a href=''>Delete</a></li></ul></div>",
+  //       html: true
+  //   })
+  // });
+
 
   $(function () {
-  $('[data-toggle="tooltip"]').tooltip({
-        title: "<div class='tooltip-wrapper'><ul><li><a href=''>Edit</a></li><li><a href=''>Delete</a></li></ul></div>",
-        html: true
-    })
+  $('[data-toggle="tooltip"]').tooltip()
   });
 
 })(jQuery);
