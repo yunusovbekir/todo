@@ -36,6 +36,7 @@ THIRD_PARTY_APPS = [
     'ckeditor',
     'django_celery_beat',
     'social_django',
+    'channels',
 ]
 
 CUSTOM_APPS = [
@@ -81,6 +82,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
+
+ASGI_APPLICATION = 'app.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 SITE_ID = 1
 
