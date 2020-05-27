@@ -8,7 +8,7 @@ This is a mini, modest to-do app that I have built to show my basic skills.
 4. Users can comment on a task (if he/she is allowed)
 5. Task owner receive a notification email if less than 10 minutes left for the deadline. `Celery`
 6. While CORE app models are stored on a MySQL database, other apps' models are stored on a Postgres database. `Django multi-database`
-7. `Django-channels` implemented for commenting functionality. (will be ready)
+7. `Django-channels` (will be ready)
 8. Application is available on different languages. `Django model translation`, `Rosetta` (will be ready)
 9. Authentication with social media account is available. `Python social auth` (will be ready)
 10. Python codes written according to `PEP8 Style Guide`. `Flake8`
