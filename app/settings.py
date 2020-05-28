@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -168,6 +169,17 @@ PASSWORD_HASHERS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
+
+gettext = lambda s: s
+
+# MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+
+LANGUAGES = (
+    ('az', _('Azerbaijani')),
+    ('en', _('English')),
+)
+
+# ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 LANGUAGE_CODE = 'en-us'
 

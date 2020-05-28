@@ -5,8 +5,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 class CommentConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_name = self.scope['url_route']['kwargs']['task_id']
+        self.room_group_name = 'task_%s' % self.room_name
 
         # Join room group
         await self.channel_layer.group_add(
@@ -32,13 +32,13 @@ class CommentConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'chat_message',
+                'type': 'task_message',
                 'message': message
             }
         )
 
     # Receive message from room group
-    async def chat_message(self, event):
+    async def task_message(self, event):
         message = event['message']
 
         # Send message to WebSocket

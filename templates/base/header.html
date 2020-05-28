@@ -1,5 +1,8 @@
 {% load i18n custom_tags %}
 {% get_menu_items as menus %}
+{% get_current_language as language_code %}
+{% get_available_languages as languages %}
+
 <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
@@ -24,7 +27,14 @@
                         <a href="{% url 'login' %}">{% trans 'Login' %}</a>
                     </li>
                 {% endif %}
-            </ul>
+                    <li class="drop-down"><a href="">{{ language_code }}</a>
+                        <ul>
+                            {% for lang_code, lang_name in languages %}
+                            <li><a href="/{{ lang_code }}{{ request.get_full_path|slice:"3:" }}">{{ lang_code }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
         </nav>
 
         {% if user.is_authenticated %}
