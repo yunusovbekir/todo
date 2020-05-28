@@ -15,6 +15,9 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = []
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+
+
 AUTH_USER_MODEL = "users.MyUser"
 
 DJANGO_APPS = [
@@ -30,6 +33,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'rosetta',
     'modeltranslation',
     'crispy_forms',
     'storages',
@@ -52,7 +56,9 @@ INSTALLED_APPS = THIRD_PARTY_APPS + CUSTOM_APPS + DJANGO_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'app.middleware.force_default_language_middleware.force_default_language_middleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -180,7 +186,7 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-# ROSETTA_SHOW_AT_ADMIN_PANEL = True
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 LANGUAGE_CODE = 'en'
 

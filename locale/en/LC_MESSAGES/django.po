@@ -1,0 +1,771 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-28 05:49+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app/settings.py:180
+msgid "Azerbaijani"
+msgstr ""
+
+#: app/settings.py:181
+msgid "English"
+msgstr ""
+
+#: core/forms.py:54
+msgid "Are you sure you entered your name correctly?"
+msgstr ""
+
+#: core/forms.py:65
+msgid "Please enter at least 6 chars of subject."
+msgstr ""
+
+#: core/models.py:12 core/models.py:92 task/models.py:14
+msgid "Title"
+msgstr ""
+
+#: core/models.py:16 task/models.py:23
+msgid "Description"
+msgstr ""
+
+#: core/models.py:19 core/models.py:168
+msgid "Photo"
+msgstr ""
+
+#: core/models.py:22
+msgid "Photo on detail page"
+msgstr ""
+
+#: core/models.py:26
+msgid "Date"
+msgstr ""
+
+#: core/models.py:30 core/models.py:107 core/models.py:216
+msgid "Ordering"
+msgstr ""
+
+#: core/models.py:39 templates/core/home/portfolio.html:6
+msgid "Portfolio"
+msgstr ""
+
+#: core/models.py:40
+msgid "Portfolios"
+msgstr ""
+
+#: core/models.py:49
+msgid "Name"
+msgstr ""
+
+#: core/models.py:53 core/models.py:132 templates/users/profile.html:87
+msgid "Email"
+msgstr ""
+
+#: core/models.py:57
+msgid "Subject"
+msgstr ""
+
+#: core/models.py:61
+msgid "Message"
+msgstr ""
+
+#: core/models.py:64
+msgid "Message sent date"
+msgstr ""
+
+#: core/models.py:68
+msgid "Message has been forwarded to the email"
+msgstr ""
+
+#: core/models.py:76
+msgid "Message sent by a visitor"
+msgstr ""
+
+#: core/models.py:77
+msgid "Messages sent by visitors"
+msgstr ""
+
+#: core/models.py:96
+msgid "Url"
+msgstr ""
+
+#: core/models.py:98
+msgid "Example /about/ -page url"
+msgstr ""
+
+#: core/models.py:101 core/models.py:179
+msgid "Position"
+msgstr ""
+
+#: core/models.py:111 core/models.py:235
+msgid "Target blank function"
+msgstr ""
+
+#: core/models.py:113 core/models.py:237
+msgid "Opens the linked document / page in a new tab"
+msgstr ""
+
+#: core/models.py:120 templates/base/footer.html:43
+msgid "Menu"
+msgstr ""
+
+#: core/models.py:121
+msgid "Menus"
+msgstr ""
+
+#: core/models.py:131
+msgid "Address"
+msgstr ""
+
+#: core/models.py:133
+msgid "Phone"
+msgstr ""
+
+#: core/models.py:136
+msgid "Contact type"
+msgstr ""
+
+#: core/models.py:141
+msgid "Content"
+msgstr ""
+
+#: core/models.py:148 templates/contact/index.html:16
+msgid "Contact"
+msgstr ""
+
+#: core/models.py:149
+msgid "Contacts"
+msgstr ""
+
+#: core/models.py:157
+msgid "Link on copyright"
+msgstr ""
+
+#: core/models.py:160
+msgid "Content on About Application section"
+msgstr ""
+
+#: core/models.py:164
+msgid "Content on About me section"
+msgstr ""
+
+#: core/models.py:174
+msgid "Full name"
+msgstr ""
+
+#: core/models.py:184
+msgid "Notification Text"
+msgstr ""
+
+#: core/models.py:188
+msgid "Google Map API Key"
+msgstr ""
+
+#: core/models.py:193
+msgid "Google Map Location ID"
+msgstr ""
+
+#: core/models.py:202 core/models.py:203
+msgid "Website Settings"
+msgstr ""
+
+#: core/models.py:220
+msgid "A tag class name"
+msgstr ""
+
+#: core/models.py:222
+msgid "Example: facebook"
+msgstr ""
+
+#: core/models.py:225
+msgid "I tag class name"
+msgstr ""
+
+#: core/models.py:227
+msgid "Example: bx bxl-facebook"
+msgstr ""
+
+#: core/models.py:230
+msgid "I tag class name on About me section"
+msgstr ""
+
+#: core/models.py:232
+msgid "Example: icofont-facebook"
+msgstr ""
+
+#: core/models.py:244
+msgid "Social Account"
+msgstr ""
+
+#: core/models.py:245
+msgid "Social Accounts"
+msgstr ""
+
+#: core/views.py:61
+#, python-brace-format
+msgid ""
+"You have a message from {name}.\n"
+"Email: {email}. \n"
+"Message:\n"
+"{message}"
+msgstr ""
+
+#: task/models.py:20
+msgid "Author"
+msgstr ""
+
+#: task/models.py:29
+msgid "Date created"
+msgstr ""
+
+#: task/models.py:33
+msgid "Deadline"
+msgstr ""
+
+#: task/models.py:48 task/models.py:60 task/models.py:99
+msgid "Task"
+msgstr ""
+
+#: task/models.py:49 templates/task/tasks-explore.html:13
+msgid "Tasks"
+msgstr ""
+
+#: task/models.py:66
+msgid "Read-only users"
+msgstr ""
+
+#: task/models.py:72
+msgid "Comment-allowed users"
+msgstr ""
+
+#: task/models.py:79
+msgid "Permitted User"
+msgstr ""
+
+#: task/models.py:80 templates/task/task-detail.html:22
+msgid "Permitted Users"
+msgstr ""
+
+#: task/models.py:90 templates/users/profile.html:51 users/models.py:41
+msgid "Username"
+msgstr ""
+
+#: task/models.py:94
+msgid "Comment content"
+msgstr ""
+
+#: task/models.py:102
+msgid "Comment date"
+msgstr ""
+
+#: task/models.py:110 templates/task/task-detail.html:94
+msgid "Comment"
+msgstr ""
+
+#: task/models.py:111 templates/task/task-detail.html:38
+msgid "Comments"
+msgstr ""
+
+#: task/signals.py:40
+msgid "Task notification - {}"
+msgstr ""
+
+#: task/signals.py:42
+msgid ""
+"{}\n"
+"Task details:\n"
+"Title: {}\n"
+"Description: {}\n"
+"Deadline: {}\n"
+msgstr ""
+
+#: task/views.py:340
+msgid "You can't add yourself to the list"
+msgstr ""
+
+#: task/views.py:345
+msgid "Username is not found."
+msgstr ""
+
+#: task/views.py:350
+msgid "This user has been already added."
+msgstr ""
+
+#: templates/404.html:19
+msgid "The page you requested was not found."
+msgstr ""
+
+#: templates/base/footer.html:10 templates/base/header.html:10
+msgid "Mini To-Do App"
+msgstr ""
+
+#: templates/base/footer.html:20
+msgid "Phone:"
+msgstr ""
+
+#: templates/base/footer.html:23 templates/contact/index.html:37
+msgid "Email:"
+msgstr ""
+
+#: templates/base/footer.html:30
+msgid "Useful Links"
+msgstr ""
+
+#: templates/base/footer.html:62
+msgid ""
+"\n"
+"                    &copy; Copyright\n"
+"                    <strong><span>Mini To-Do App</span></strong>. All "
+"Rights\n"
+"                    Reserved\n"
+"                "
+msgstr ""
+
+#: templates/base/footer.html:69
+msgid "Designed by"
+msgstr ""
+
+#: templates/base/footer.html:70
+msgid "Developed by"
+msgstr ""
+
+#: templates/base/header.html:23
+msgid "Profile"
+msgstr ""
+
+#: templates/base/header.html:27 templates/users/login.html:15
+#: templates/users/password-reset-complete.html:21
+msgid "Login"
+msgstr ""
+
+#: templates/base/header.html:41
+msgid "Logout"
+msgstr ""
+
+#: templates/base/header.html:43
+msgid "Get Started"
+msgstr ""
+
+#: templates/contact/index.html:6
+msgid "Mini To-Do App - Contact"
+msgstr ""
+
+#: templates/contact/index.html:28
+msgid "Location:"
+msgstr ""
+
+#: templates/contact/index.html:46
+msgid "Call:"
+msgstr ""
+
+#: templates/contact/index.html:78
+msgid "Your message has been sent successfully. Thank you!"
+msgstr ""
+
+#: templates/contact/index.html:82
+msgid "Send Message"
+msgstr ""
+
+#: templates/core/home/hero.html:8
+msgid "This app has been created for portfolio purpose only."
+msgstr ""
+
+#: templates/core/home/hero.html:12
+msgid "Explore"
+msgstr ""
+
+#: templates/core/home/index.html:5
+msgid "Mini To-Do App - Home"
+msgstr ""
+
+#: templates/core/home/portfolio.html:7
+msgid "In this section, you can check my portfolio"
+msgstr ""
+
+#: templates/core/home/portfolio.html:13
+msgid "Web applications"
+msgstr ""
+
+#: templates/core/home/team.html:8
+msgid "About me"
+msgstr ""
+
+#: templates/portfolio-details.html:15
+msgid "Project information"
+msgstr ""
+
+#: templates/portfolio-details.html:17
+msgid "Project date: "
+msgstr ""
+
+#: templates/portfolio-details.html:18
+msgid "Project URL"
+msgstr ""
+
+#: templates/portfolio-details.html:25
+msgid "This is an example of portfolio detail"
+msgstr ""
+
+#: templates/task/comment-delete.html:5
+msgid "Mini To-Do App - Delete Comment"
+msgstr ""
+
+#: templates/task/comment-delete.html:18
+msgid "Are you sure to delete the comment?"
+msgstr ""
+
+#: templates/task/comment-delete.html:21
+#: templates/task/permitted-user-delete.html:21
+#: templates/task/task-delete.html:21
+msgid "Cancel"
+msgstr ""
+
+#: templates/task/comment-delete.html:24
+#: templates/task/permitted-user-delete.html:24
+#: templates/task/task-delete.html:24
+msgid "Delete"
+msgstr ""
+
+#: templates/task/comment-update.html:5
+msgid "Mini To-Do App - Update Comment"
+msgstr ""
+
+#: templates/task/comment-update.html:15
+msgid "Update Comment"
+msgstr ""
+
+#: templates/task/comment-update.html:26
+#: templates/task/permitted-user-detail.html:29
+#: templates/task/task-update-form.html:31 templates/users/profile.html:169
+msgid "Update"
+msgstr ""
+
+#: templates/task/permitted-user-add.html:5
+#: templates/task/permitted-user-detail.html:5
+#: templates/task/task-create-form.html:5
+#: templates/task/task-update-form.html:5
+msgid "Mini To-Do App - Update Your Task"
+msgstr ""
+
+#: templates/task/permitted-user-add.html:15
+msgid "Add a user to Permitted User's list"
+msgstr ""
+
+#: templates/task/permitted-user-add.html:29
+msgid "Add"
+msgstr ""
+
+#: templates/task/permitted-user-delete.html:5
+msgid "Mini To-Do App - Delete User"
+msgstr ""
+
+#: templates/task/permitted-user-delete.html:18
+msgid "Are you sure to delete the user from permitted user's list?"
+msgstr ""
+
+#: templates/task/permitted-user-detail.html:15
+msgid "Update User's permission"
+msgstr ""
+
+#: templates/task/permitted-user-detail.html:30
+msgid "Delete User"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:5
+msgid "Mini To-Do App - Permitted Users"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:13
+msgid "Permitted Users List"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:15
+msgid ""
+"\n"
+"                        Permitted user's that can either see your task or "
+"see\n"
+"                        and comment on it\n"
+"                    "
+msgstr ""
+
+#: templates/task/permitted-users-list.html:25
+msgid "Read only users"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:36
+#: templates/task/permitted-users-list.html:56
+msgid "No user is found"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:42
+msgid "Comment allowed users"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:62
+msgid "Add new user"
+msgstr ""
+
+#: templates/task/permitted-users-list.html:72
+msgid "Add user"
+msgstr ""
+
+#: templates/task/task-create-form.html:15
+msgid "Create A New Task"
+msgstr ""
+
+#: templates/task/task-create-form.html:31
+msgid "Create"
+msgstr ""
+
+#: templates/task/task-delete.html:5 templates/task/task-detail.html:5
+#: templates/task/user-tasks.html:5 templates/users/profile.html:5
+msgid "Mini To-Do App - "
+msgstr ""
+
+#: templates/task/task-delete.html:18
+msgid "Are you sure to delete the task?"
+msgstr ""
+
+#: templates/task/task-detail.html:20
+msgid "Update Task"
+msgstr ""
+
+#: templates/task/task-detail.html:21
+msgid "Delete Task"
+msgstr ""
+
+#: templates/task/task-detail.html:25
+msgid "Author: "
+msgstr ""
+
+#: templates/task/task-detail.html:31
+msgid "Deadline: "
+msgstr ""
+
+#: templates/task/task-detail.html:34
+msgid "Description: "
+msgstr ""
+
+#: templates/task/task-detail.html:73
+msgid "No comment"
+msgstr ""
+
+#: templates/task/task-detail.html:88
+msgid "Loading"
+msgstr ""
+
+#: templates/task/task-detail.html:90
+msgid "Your message has been sent. Thank you!"
+msgstr ""
+
+#: templates/task/task-update-form.html:15
+msgid "Update Your Task"
+msgstr ""
+
+#: templates/task/tasks-explore.html:5
+msgid "Mini To-Do App - Explore Tasks"
+msgstr ""
+
+#: templates/task/tasks-explore.html:15
+msgid ""
+"\n"
+"                        On this page, there are only your tasks and others'\n"
+"                        tasks that you are allowed to see.\n"
+"                    "
+msgstr ""
+
+#: templates/task/tasks-explore.html:34 templates/users/profile.html:119
+msgid "Add New Task"
+msgstr ""
+
+#: templates/task/tasks-explore.html:54 templates/task/user-tasks.html:41
+#: templates/users/profile.html:139
+msgid "Author:"
+msgstr ""
+
+#: templates/task/tasks-explore.html:57 templates/task/user-tasks.html:44
+#: templates/users/profile.html:142
+msgid "Deadline:"
+msgstr ""
+
+#: templates/task/user-tasks.html:16
+msgid "On this page, there are only your tasks."
+msgstr ""
+
+#: templates/task/user-tasks.html:18
+msgid "On this page, there are only the tasks you are allowed to see."
+msgstr ""
+
+#: templates/users/login.html:5
+msgid "Mini To-Do App - Log in"
+msgstr ""
+
+#: templates/users/login.html:27
+msgid "Log in"
+msgstr ""
+
+#: templates/users/login.html:35
+msgid "Need an account?"
+msgstr ""
+
+#: templates/users/login.html:36 templates/users/register.html:15
+msgid "Sign Up"
+msgstr ""
+
+#: templates/users/login.html:45 templates/users/profile.html:177
+msgid "Forgot your password?"
+msgstr ""
+
+#: templates/users/login.html:46 templates/users/profile.html:178
+msgid "Password Reset"
+msgstr ""
+
+#: templates/users/logout.html:10
+msgid "You logged out"
+msgstr ""
+
+#: templates/users/password-reset-complete.html:5
+msgid "Mini To-Do App - Password Reset Successful"
+msgstr ""
+
+#: templates/users/password-reset-complete.html:17
+msgid "Your password has been reset"
+msgstr ""
+
+#: templates/users/password-reset-confirm.html:5
+#: templates/users/password-reset.html:5
+msgid "Mini To-Do App - Reset Your Password"
+msgstr ""
+
+#: templates/users/password-reset-confirm.html:15
+#: templates/users/password-reset.html:15
+msgid "Reset Your Password"
+msgstr ""
+
+#: templates/users/password-reset-confirm.html:27
+#: templates/users/password-reset.html:27
+msgid "Reset"
+msgstr ""
+
+#: templates/users/password-reset-done.html:12
+msgid "Email has been sent with instructions to reset your password"
+msgstr ""
+
+#: templates/users/password-reset-done.html:16
+msgid "Home"
+msgstr ""
+
+#: templates/users/profile.html:15
+msgid "Your Profile"
+msgstr ""
+
+#: templates/users/profile.html:26
+msgid "Info"
+msgstr ""
+
+#: templates/users/profile.html:32
+msgid "Your Tasks"
+msgstr ""
+
+#: templates/users/profile.html:38
+msgid "Update Profile"
+msgstr ""
+
+#: templates/users/profile.html:59 users/models.py:52
+msgid "First Name"
+msgstr ""
+
+#: templates/users/profile.html:66 templates/users/profile.html:80
+msgid "Not provided"
+msgstr ""
+
+#: templates/users/profile.html:73 users/models.py:57
+msgid "Last Name"
+msgstr ""
+
+#: templates/users/profile.html:95
+msgid "Your Task Count"
+msgstr ""
+
+#: templates/users/profile.html:159
+msgid "Update Your Profile"
+msgstr ""
+
+#: templates/users/register.html:5
+msgid "Mini To-Do App - Sign Up"
+msgstr ""
+
+#: templates/users/register.html:27
+msgid "Sign up"
+msgstr ""
+
+#: templates/users/register.html:36
+msgid "Already have an account?"
+msgstr ""
+
+#: templates/users/register.html:38
+msgid "Sign In"
+msgstr ""
+
+#: users/forms.py:51 users/forms.py:68
+msgid "Are you sure you entered your first name correctly?"
+msgstr ""
+
+#: users/models.py:30
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: users/models.py:32
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: users/models.py:46
+msgid "Email Address"
+msgstr ""
+
+#: users/models.py:62
+msgid "staff status"
+msgstr ""
+
+#: users/models.py:64
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: users/models.py:68
+msgid "active"
+msgstr ""
+
+#: users/models.py:70
+msgid ""
+"Designates whether this user should be treated as active.Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: users/models.py:74
+msgid "date joined"
+msgstr ""
+
+#: users/models.py:78
+msgid "last login"
+msgstr ""
+
+#: users/models.py:87
+msgid "User"
+msgstr ""
+
+#: users/models.py:88
+msgid "Users"
+msgstr ""
