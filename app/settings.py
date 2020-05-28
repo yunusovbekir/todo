@@ -30,6 +30,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'modeltranslation',
     'crispy_forms',
     'storages',
     'celery',
@@ -172,7 +173,7 @@ PASSWORD_HASHERS = [
 
 gettext = lambda s: s
 
-# MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 LANGUAGES = (
     ('az', _('Azerbaijani')),
@@ -181,7 +182,7 @@ LANGUAGES = (
 
 # ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Asia/Baku'
 
