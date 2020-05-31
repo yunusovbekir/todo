@@ -131,6 +131,11 @@ DATABASES = {
         ),
         'HOST': os.environ.get('MYSQL_HOST', "127.0.0.1"),
         'PORT': os.environ.get('MYSQL_PORT', 3306),
+        'TEST': {
+            'NAME': 'test_db_mysql',
+            # 'USER': 'db_user',
+            # 'PASSWORD': 'tpsAfAQPLvYkhBuztctVB9ath8ejP2yDNmUszFbsK5stg7g29QEcQMKDc3yBR9B5',
+        },
     }
 }
 

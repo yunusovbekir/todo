@@ -18,7 +18,7 @@ class IndexView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            'portfolio': Portfolio.objects.all(),
+            'portfolio': Portfolio.objects.filter(status=True),
         }
         return context
 
