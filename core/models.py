@@ -24,6 +24,7 @@ class Portfolio(models.Model):
     url = models.URLField()
     date = models.DateField(
         _("Date"),
+        null=True,
         blank=True,
     )
     ordering = models.PositiveIntegerField(

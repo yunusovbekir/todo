@@ -120,6 +120,9 @@ DATABASES = {
         ),
         'HOST': os.environ.get('POSTGRES_HOST', "localhost"),
         'PORT': os.environ.get('POSTGRES_PORT', 5432),
+        'TEST': {
+            'NAME': 'test_db_default',
+        },
     },
     'db_mysql': {
         'ENGINE': 'django.db.backends.mysql',
@@ -133,8 +136,6 @@ DATABASES = {
         'PORT': os.environ.get('MYSQL_PORT', 3306),
         'TEST': {
             'NAME': 'test_db_mysql',
-            # 'USER': 'db_user',
-            # 'PASSWORD': 'tpsAfAQPLvYkhBuztctVB9ath8ejP2yDNmUszFbsK5stg7g29QEcQMKDc3yBR9B5',
         },
     }
 }

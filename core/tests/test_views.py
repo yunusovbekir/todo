@@ -1,7 +1,7 @@
 import shutil
 import tempfile
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase, override_settings
+from django.test import override_settings, SimpleTestCase
 from django.urls import reverse
 from ..models import Portfolio
 
@@ -11,7 +11,7 @@ MEDIA_ROOT = tempfile.mkdtemp()
 
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
-class IndexViewTestCases(TestCase):
+class IndexViewTestCases(SimpleTestCase):
     databases = '__all__'
 
     def setUp(self):
@@ -44,25 +44,25 @@ class IndexViewTestCases(TestCase):
         """
         response = self.client.get(path=INDEX_URL)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'index/index.html')
+        self.assertTemplateUsed(response, 'core/home/index.html')
 
     def test_index_page_with_valid_data(self):
         """
         Testing home page with valid data on database
+        Index view returns only status=True
+
         """
         for each in range(10):
-            if each <= 5:
+            if each <= 4:
+                # 5 status = True
                 Portfolio.objects.create(**self.portfolio_data)
             else:
+                # status = False
                 Portfolio.objects.create(**self.portfolio_data, status=False)
 
-        query = Portfolio.objects.filter(status=True)
-
+        all_portfolio = Portfolio.objects.all()
         response = self.client.get(path=INDEX_URL)
 
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(
-            response.context.get('portfolio'),
-            query,
-            transform=lambda x: x
-        )
+        self.assertTrue(response.context.get('portfolio'), 5)
+        self.assertTrue(all_portfolio.count(), 10)
