@@ -109,8 +109,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {},
-    'db_default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('POSTGRES_DB', "db_default"),
         'USER': os.environ.get('POSTGRES_USER', "db_user"),
@@ -120,40 +119,7 @@ DATABASES = {
         ),
         'HOST': os.environ.get('POSTGRES_HOST', "localhost"),
         'PORT': os.environ.get('POSTGRES_PORT', 5432),
-        'TEST': {
-            'NAME': 'test_db_default',
-        },
-    },
-    'db_mysql': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE', "db_mysql"),
-        'USER': os.environ.get('MYSQL_USER', "db_user"),
-        'PASSWORD': os.environ.get(
-            'MYSQL_PASSWORD',
-            "tpsAfAQPLvYkhBuztctVB9ath8ejP2yDNmUszFbsK5stg7g29QEcQMKDc3yBR9B5"
-        ),
-        'HOST': os.environ.get('MYSQL_HOST', "127.0.0.1"),
-        'PORT': os.environ.get('MYSQL_PORT', 3306),
-        'TEST': {
-            'NAME': 'test_db_mysql',
-        },
     }
-}
-
-DATABASE_ROUTERS = ['app.routers.DbRouter']
-
-DATABASE_APPS_MAPPING = {
-    "users": "db_default",
-    'auth': "db_default",
-    'admin': "db_default",
-    'contenttypes': "db_default",
-    'sessions': "db_default",
-    'sites': "db_default",
-    'social_django': "db_default",
-    'flatpages': "db_default",
-    'django_celery': "db_default",
-    "task": "db_default",
-    "core": "db_mysql",
 }
 
 # Password validation

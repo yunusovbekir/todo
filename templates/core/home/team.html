@@ -14,8 +14,10 @@
                  data-aos="fade-up" data-aos-delay="100">
                 <div class="member">
                     <div class="member-img">
+                    {% if settings.photo %}
                         <img src="{{ settings.photo.url }}"
                              class="img-fluid" alt="">
+                    {% endif %}
                         <div class="social">
                             {% for account in settings.social_accounts_set.all %}
                                 <a {% if account.target_blank %}

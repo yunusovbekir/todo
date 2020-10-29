@@ -44,10 +44,3 @@ else:
         CELERY_TASK_SERIALIZER='json',
         CELERY_RESULT_SERIALIZER='json',
     )
-#
-# app.conf.beat_schedule = {
-#     'every_week_update_leaderboard': {
-#         'task': 'game.tasks.update_leaderboard',
-#         'schedule': crontab(hour=0, minute=1),
-#     },
-# }

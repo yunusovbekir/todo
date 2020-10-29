@@ -14,22 +14,12 @@ services:
     environment:
       - LC_ALL=C.UTF-8
 
-  mysql:
-    container_name: mysql
-    image: mysql:5.7
+
+  redis:
+    image: redis:4.0.11
+    restart: "on-failure"
+    container_name: redis
     ports:
-      - '3306:3306'
+      - 6379:6379
     volumes:
-      - ../mysqldb:/var/lib/mysqldb/data
-    env_file: ../.env
-    environment:
-      - LC_ALL=C.UTF-8
-#
-#  redis:
-#    image: redis:4.0.11
-#    restart: "on-failure"
-#    container_name: redis
-#    ports:
-#      - 6379:6379
-#    volumes:
-#      - ../redisdb:/var/lib/redis
+      - ../redisdb:/var/lib/redis
