@@ -4,7 +4,7 @@ services:
 
   postgres:
     container_name:  postgres
-    image:           postgres:9.6
+    image:           postgres:13.0
     restart: "on-failure"
     ports:
       - 5432:5432 # Bind host port 5432 to PostgreSQL port 5432
@@ -16,7 +16,7 @@ services:
 
 
   redis:
-    image: redis:4.0.11
+    image: redis:5
     restart: "on-failure"
     container_name: redis
     ports:

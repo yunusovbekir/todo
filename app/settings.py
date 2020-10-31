@@ -94,19 +94,17 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # ASGI config
 
-ASGI_APPLICATION = 'app.routing.application'
+ASGI_APPLICATION = 'app.asgi.application'
 
-if PROD:
-    CHANNEL_LAYERS = {
-        'default': {
-            'BACKEND': 'channels_redis.core.RedisChannelLayer',
-            'CONFIG': {
-                "hosts": [('127.0.0.1', 6379)],
-            },
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
         },
-    }
-else:
-    CHANNEL_LAYERS = {}
+    },
+}
+
 
 SITE_ID = 1
 
@@ -117,7 +115,7 @@ SITE_ID = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB', "db_default"),
+        'NAME': os.environ.get('POSTGRES_DB', "default"),
         'USER': os.environ.get('POSTGRES_USER', "db_user"),
         'PASSWORD': os.environ.get(
             'POSTGRES_PASSWORD',

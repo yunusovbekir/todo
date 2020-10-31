@@ -128,12 +128,12 @@
         document.querySelector('#id_comment_content').focus();
 
         document.querySelector('#comment-form-button').onclick = function(e) {
-            const messageInputDom = document.querySelector('#id_comment_content');
-            const message = messageInputDom.value;
+            const commentInput = document.querySelector('#id_comment_content');
+            const comment = commentInput.value;
             commentSocket.send(JSON.stringify({
-                'message': message
+                'comment': comment
             }));
-            messageInputDom.value = '';
+            commentInput.value = '';
         };
     </script>
 {% endblock %}
