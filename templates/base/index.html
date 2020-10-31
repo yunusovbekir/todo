@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    {% block title %}{% endblock %}
+  {% block title %}{% endblock %}
 
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
@@ -37,7 +37,7 @@
     {% block content %}{% endblock %}
 
     {% if request.resolver_match.url_name != 'password-reset-done' %}
-    {% include 'base/footer.html' %}
+        {% include 'base/footer.html' %}
     {% endif %}
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
@@ -57,6 +57,7 @@
   <!-- Template Main JS File -->
   <script src="{% static 'todo_app/assets/js/main.js' %}"></script>
 
+  {% block additional_js %}{% endblock %}
 </body>
 
 </html>

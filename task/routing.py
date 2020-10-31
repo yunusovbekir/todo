@@ -3,5 +3,5 @@ from task.consumers import CommentConsumer
 
 
 websocker_urlpatterns = [
-    re_path(r'ws/task/(?P<task_id>\w+)/$', CommentConsumer)
+    re_path(r'ws/task/(?P<task_id>\w+)/$', CommentConsumer.as_asgi())
 ]
