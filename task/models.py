@@ -34,15 +34,28 @@ class Task(models.Model):
         default=timezone.now,
     )
 
+    def __init__(self, *args, **kwargs):
+        super(Task, self).__init__(*args, **kwargs)
+        self.cache_deadline = self.deadline
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('task-detail', kwargs={'pk': self.pk})
 
-    def __init__(self, *args, **kwargs):
-        super(Task, self).__init__(*args, **kwargs)
-        self.cache_deadline = self.deadline
+    def get_permitted_user_object(self):
+        return self.permitted_user_set.first()
+
+    @property
+    def comment_allowed_users(self):
+        permitted_user_object = self.get_permitted_user_object()
+        return permitted_user_object.comment_allowed_users.all()
+
+    @property
+    def read_only_users(self):
+        permitted_user_object = self.get_permitted_user_object()
+        return permitted_user_object.read_only_users.all()
 
     class Meta:
         verbose_name = _("Task")

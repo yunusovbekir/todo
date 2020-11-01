@@ -38,65 +38,65 @@
                             <h4>{% trans 'Comments' %}</h4>
                         </div>
                         <div id="comment">
-                        {% if comments %}
-                            {% for item in comments %}
-                                <div class="comment-box">
-                                <div class="comment-wrapper">
-                                    <h6 class="comment-content">
-                                        <a href="{% url 'user-tasks' item.username %}">{{ item.username.username }}: </a>{{ item.comment_content }}
-                                    </h6>
-                                    <button
-                                            class="button-more"
-                                            data-toggle="tooltip"
-                                            data-html="true"
-                                            title="<div class='tooltip-wrapper'>
-                                                     <ul>
-                                                     {% if request.user == item.username %}
-                                                        <li><a href='{% url 'comment-update' task.id item.id %}'>Edit</a></li>
-                                                    {% endif %}
-                                                    {% if request.user == task.author or request.user == item.username %}
-                                                        <li><a href='{% url 'comment-delete' task.id item.id %}'>Delete</a></li>
-                                                    {% endif %}
-                                                        <li><a href=''>Report</a></li>
-                                                     </ul>
-                                                   </div>"
-                                    >
-                                        <i class='bx bx-dots-vertical-rounded'></i>
-                                    </button>
-                                </div>
-                                    <span>{{ item.comment_date|get_datetime_difference_for_comment }}</span>
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="comment">
-                                <div class="container">
-                                    {% trans 'No comment' %}
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if request.user == task.author or is_allowed %} <!-- Check user is owner or user is allowed to comment -->
-                            <div class="comment-form">
-                                <div data-aos="fade-up">
-                                    <form method="post" class="email-form">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            {{ comment_form.comment_content }}
-                                            <div class="validate"></div>
+                            {% if comments %}
+                                {% for item in comments %}
+                                    <div class="comment-box">
+                                        <div class="comment-wrapper">
+                                            <h6 class="comment-content">
+                                                <a href="{% url 'user-tasks' item.username %}">{{ item.username.username }}: </a>{{ item.comment_content }}
+                                            </h6>
+                                            <button
+                                                    class="button-more"
+                                                    data-toggle="tooltip"
+                                                    data-html="true"
+                                                    title="<div class='tooltip-wrapper'>
+                                                             <ul>
+                                                             {% if request.user == item.username %}
+                                                                <li><a href='{% url 'comment-update' task.id item.id %}'>Edit</a></li>
+                                                            {% endif %}
+                                                            {% if request.user == task.author or request.user == item.username %}
+                                                                <li><a href='{% url 'comment-delete' task.id item.id %}'>Delete</a></li>
+                                                            {% endif %}
+                                                                <li><a href=''>Report</a></li>
+                                                             </ul>
+                                                           </div>"
+                                            >
+                                                <i class='bx bx-dots-vertical-rounded'></i>
+                                            </button>
                                         </div>
-                                        <div class="mb-3">
-                                            <div class="loading">{% trans 'Loading' %}</div>
-                                            <div class="error-message"></div>
-                                            <div class="sent-message">{% trans 'Your message has been sent. Thank you!' %}
+                                        <span>{{ item.comment_date|get_datetime_difference_for_comment }}</span>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="comment">
+                                    <div class="container">
+                                        {% trans 'No comment' %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if request.user == task.author or is_allowed %} <!-- Check user is owner or user is allowed to comment -->
+                                <div class="comment-form">
+                                    <div data-aos="fade-up">
+                                        <form method="post" id="comment-form" class="email-form">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                {{ comment_form.comment_content }}
+                                                <div class="validate"></div>
                                             </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <button id="comment-form-button" type="submit">{% trans 'Comment' %}</button>
-                                        </div>
-                                    </form>
+                                            <div class="mb-3">
+                                                <div class="loading">{% trans 'Loading' %}</div>
+                                                <div class="error-message"></div>
+                                                <div class="sent-message">{% trans 'Your message has been sent. Thank you!' %}
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <button id="comment-form-button" type="submit">{% trans 'Comment' %}</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,6 +107,7 @@
 {% block additional_js %}
     <script>
         const task_id = '{{ object.id|escapejs }}';
+        const form = $('#comment-form');
 
         const commentSocket = new WebSocket(
             'ws://'
@@ -118,22 +119,23 @@
 
         commentSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#socket-log').value += (data.message + '\n');
+            console.log(data.comment);
         };
 
         commentSocket.onclose = function(e) {
             console.error('Comment socket closed unexpectedly');
         };
 
-        document.querySelector('#id_comment_content').focus();
-
-        document.querySelector('#comment-form-button').onclick = function(e) {
-            const commentInput = document.querySelector('#id_comment_content');
-            const comment = commentInput.value;
-            commentSocket.send(JSON.stringify({
-                'comment': comment
-            }));
-            commentInput.value = '';
-        };
+        commentSocket.onopen = function (e) {
+            form.submit(function (event) {
+                event.preventDefault();
+                const text = $('#id_comment_content').val();
+                const data = {
+                    'comment': text
+                };
+                commentSocket.send(JSON.stringify(data));
+                form[0].reset();
+            });
+        }
     </script>
 {% endblock %}

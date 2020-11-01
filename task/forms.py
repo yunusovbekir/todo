@@ -26,18 +26,20 @@ class TaskForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    comment_content = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Write your comment...',
+                'rows': '5',
+            },
+        )
+    )
+
     class Meta:
         model = Comment
         fields = ("comment_content",)
-        widgets = {
-            'comment_content': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Write your comment...',
-                    'rows': '5',
-                },
-            ),
-        }
 
 
 # -----------------------------------------------------------------------------
