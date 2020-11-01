@@ -1666,7 +1666,6 @@ section {
 }
 
 .email-form input, .contact .email-form textarea {
-  border-radius: 0;
   box-shadow: none;
   font-size: 14px;
   border-radius: 4px;
@@ -1674,10 +1673,6 @@ section {
 
 .email-form input:focus, .contact .email-form textarea:focus {
   border-color: #2487ce;
-}
-
-.email-form input {
-  height: 44px;
 }
 
 .email-form textarea {

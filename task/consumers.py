@@ -1,30 +1,29 @@
 import json
-
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 
-class CommentConsumer(WebsocketConsumer):
+class CommentConsumer(AsyncWebsocketConsumer):
 
-    def connect(self):
+    async def connect(self):
         self.task = self.scope['url_route']['kwargs']['task_id']
         self.task_group_name = 'task_%s' % self.task
 
         # Join room group
-        async_to_sync(self.channel_layer.group_add)(
+        await self.channel_layer.group_add(
             self.task_group_name,
             self.channel_name
         )
 
-        self.accept()
+        await self.accept()
 
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
+    async def disconnect(self, close_code):
+
+        await self.channel_layer.group_discard(
             self.task_group_name,
             self.channel_name
         )
 
-    def receive(self, text_data=None, bytes_data=None):
+    async def receive(self, text_data=None, bytes_data=None):
         """ Receive message from WebSocket """
 
         # get data as a json format and convert to python object
@@ -34,7 +33,7 @@ class CommentConsumer(WebsocketConsumer):
         comment = text_data_json['comment']
 
         # send message after converting to json
-        async_to_sync(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.task_group_name,
             {
                 'type': 'task_comment',
@@ -42,12 +41,12 @@ class CommentConsumer(WebsocketConsumer):
             }
         )
 
-    def task_comment(self, event):
+    async def task_comment(self, event):
         """ Receive message from room group """
 
         comment = event['comment']
 
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
+        await self.send(text_data=json.dumps({
             'comment': comment
         }))
