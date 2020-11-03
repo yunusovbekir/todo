@@ -38,36 +38,39 @@
                             <h4>{% trans 'Comments' %}</h4>
                         </div>
                         <div id="comment">
-                            {% if comments %}
-                                {% for item in comments %}
-                                    <div class="comment-box">
-                                        <div class="comment-wrapper">
-                                            <h6 class="comment-content">
-                                                <a href="{% url 'user-tasks' item.username %}">{{ item.username.username }}: </a>{{ item.comment_content }}
-                                            </h6>
-                                            <button
-                                                    class="button-more"
-                                                    data-toggle="tooltip"
-                                                    data-html="true"
-                                                    title="<div class='tooltip-wrapper'>
-                                                             <ul>
-                                                             {% if request.user == item.username %}
-                                                                <li><a href='{% url 'comment-update' task.id item.id %}'>Edit</a></li>
-                                                            {% endif %}
-                                                            {% if request.user == task.author or request.user == item.username %}
-                                                                <li><a href='{% url 'comment-delete' task.id item.id %}'>Delete</a></li>
-                                                            {% endif %}
-                                                                <li><a href=''>Report</a></li>
-                                                             </ul>
-                                                           </div>"
-                                            >
-                                                <i class='bx bx-dots-vertical-rounded'></i>
-                                            </button>
+                            <div id="comment-items">
+                                {% if comments %}
+                                    {% for item in comments %}
+                                        <div class="comment-box">
+                                            <div class="comment-wrapper">
+                                                <h6 class="comment-content">
+                                                    <a href="{% url 'user-tasks' item.username %}">{{ item.username }}: </a>{{ item.comment_content }}
+                                                </h6>
+                                                <button
+                                                        class="button-more"
+                                                        data-toggle="tooltip"
+                                                        data-html="true"
+                                                        title="<div class='tooltip-wrapper'>
+                                                                 <ul>
+                                                                 {% if request.user == item.username %}
+                                                                    <li><a href='{% url 'comment-update' task.id item.id %}'>Edit</a></li>
+                                                                {% endif %}
+                                                                {% if request.user == task.author or request.user == item.username %}
+                                                                    <li><a href='{% url 'comment-delete' task.id item.id %}'>Delete</a></li>
+                                                                {% endif %}
+                                                                    <li><a href=''>Report</a></li>
+                                                                 </ul>
+                                                               </div>"
+                                                >
+                                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                                </button>
+                                            </div>
+                                            <span>{{ item.comment_date|get_datetime_difference_for_comment }}</span>
                                         </div>
-                                        <span>{{ item.comment_date|get_datetime_difference_for_comment }}</span>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            {% if not comments %}
                                 <div class="comment">
                                     <div class="container">
                                         {% trans 'No comment' %}
@@ -117,25 +120,85 @@
             + '/'
         );
 
+
+        function addComment(obj, helper){
+            const div = document.createElement('div');
+
+            console.log('----------------');
+            console.log('type: ' +  helper);
+            console.log('object: ' +  obj);
+            console.log('-----------------');
+
+
+            div.className = 'comment-box';
+
+            div.innerHTML = `
+                <div class="comment-wrapper">
+                    <h6 class="comment-content">
+                        <a href=''>${ helper }: </a>${ obj }
+                    </h6>
+                    <button
+                            class="button-more"
+                            data-toggle="tooltip"
+                            data-html="true"
+                            {#title="<div class='tooltip-wrapper'>#}
+                            {#         <ul>#}
+                            {#         {% if request.user == item.username %}#}
+                            {#            <li><a href='{% url 'comment-update' task.id item.id %}'>Edit</a></li>#}
+                            {#        {% endif %}#}
+                            {#        {% if request.user == task.author or request.user == item.username %}#}
+                            {#            <li><a href='{% url 'comment-delete' task.id item.id %}'>Delete</a></li>#}
+                            {#        {% endif %}#}
+                            {#            <li><a href=''>Report</a></li>#}
+                            {#         </ul>#}
+                            {#       </div>"#}
+                    >
+                        <i class='bx bx-dots-vertical-rounded'></i>
+                    </button>
+                </div>
+                <span>1m</span>
+            `;
+          document.getElementById('comment-items').appendChild(div);
+        }
+
+        form.submit(function (event) {
+            event.preventDefault();
+            const comment = $('#id_comment_content').val();
+            const data = {
+                'comment': comment
+            };
+            commentSocket.send(JSON.stringify(data));
+            form[0].reset();
+
+            const obj = {
+                'comment': comment,
+                'user': '{{ request.user }}'
+            };
+
+            const no_comment_div = document.getElementsByClassName('comment');
+            while (no_comment_div.length > 0){
+                no_comment_div[0].parentNode.removeChild(no_comment_div[0]);
+            }
+
+            addComment(obj, 'sending');
+        });
+
+        commentSocket.onopen = function (e) {
+            console.log('Socket is open');
+        };
+
         commentSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            console.log(data.comment);
+            addComment(data, 'receiving');
         };
 
         commentSocket.onclose = function(e) {
             console.error('Comment socket closed unexpectedly');
         };
 
-        commentSocket.onopen = function (e) {
-            form.submit(function (event) {
-                event.preventDefault();
-                const text = $('#id_comment_content').val();
-                const data = {
-                    'comment': text
-                };
-                commentSocket.send(JSON.stringify(data));
-                form[0].reset();
-            });
-        }
+        commentSocket.onerror = function (e) {
+            console.error(`[error] ${e.message}`)
+        };
+
     </script>
 {% endblock %}

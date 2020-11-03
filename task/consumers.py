@@ -1,7 +1,7 @@
 import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from task.models import Comment, Task
+from task.models import Comment
 
 
 class CommentConsumer(AsyncWebsocketConsumer):
@@ -29,10 +29,11 @@ class CommentConsumer(AsyncWebsocketConsumer):
         """ Receive message from WebSocket """
 
         # get data as a json format and convert to python object
-        text_data_json = json.loads(text_data)
+        data = json.loads(text_data)
+        print(data, end='\n======================================\n')
 
         # get message from the data
-        comment = text_data_json.get('comment')
+        comment = data.get('comment')
 
         # get user
         user = self.scope.get('user')
@@ -40,24 +41,27 @@ class CommentConsumer(AsyncWebsocketConsumer):
         # save comment to database
         await self.create_comment(user, self.task, comment)
 
+        response = {
+            'comment': comment,
+            'user': user.username,
+        }
+
         # send message
         await self.channel_layer.group_send(
             group=self.task_group_name,
             message={
                 'type': 'task_comment',
-                'comment': comment,
+                'text': json.dumps(response),
             }
         )
 
     async def task_comment(self, event):
         """ Receive message from room group """
 
-        comment = event['comment']
+        text_data = event['text']
 
         # Send message to WebSocket
-        await self.send(text_data=json.dumps({
-            'comment': comment
-        }))
+        await self.send(text_data=json.dumps(text_data))
 
     @database_sync_to_async
     def create_comment(self, user, task, comment):
