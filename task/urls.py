@@ -1,11 +1,11 @@
 from django.urls import path
 from .views import (
+    UserTaskListView,
     TaskListView,
     TaskDetailView,
     TaskCreateView,
     TaskUpdateView,
     TaskDeleteView,
-    UserTaskListView,
     PermittedUsersListView,
     PermittedUserDeleteView,
     PermittedUserAddView,

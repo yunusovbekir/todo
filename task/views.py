@@ -1,3 +1,4 @@
+from itertools import chain
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.translation import ugettext as _
@@ -24,7 +25,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     """
 
     model = Task
-    template_name = 'task/tasks-explore.html'
+    template_name = 'task/task-explore.html'
     context_object_name = 'tasks'
     ordering = ('-date_created',)
 
@@ -33,14 +34,18 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
         # request user's tasks
         task_list_1 = Task.objects.filter(author=self.request.user)
 
-        # the ones request user is allowed to see
+        # the ones request user is allowed to see, exclude author's tasks
         user_list_1 = Task.objects.filter(
             permitted_user__read_only_users=self.request.user
+        ).exclude(
+            author=self.request.user
         )
         user_list_2 = Task.objects.filter(
             permitted_user__comment_allowed_users=self.request.user
+        ).exclude(
+            author=self.request.user
         )
-        return task_list_1 | user_list_1 | user_list_2
+        return list(chain(task_list_1, user_list_1, user_list_2))
 
 
 # -----------------------------------------------------------------------------

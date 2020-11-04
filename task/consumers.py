@@ -1,7 +1,10 @@
 import json
+import logging
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from task.models import Comment
+
+logger = logging.getLogger(__name__)
 
 
 class CommentConsumer(AsyncWebsocketConsumer):
@@ -15,7 +18,7 @@ class CommentConsumer(AsyncWebsocketConsumer):
             group=self.task_group_name,
             channel=self.channel_name,
         )
-
+        logger.info('User "%s" joined to the channel' % self.scope.get('user'))
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -30,7 +33,6 @@ class CommentConsumer(AsyncWebsocketConsumer):
 
         # get data as a json format and convert to python object
         data = json.loads(text_data)
-        print(data, end='\n======================================\n')
 
         # get message from the data
         comment = data.get('comment')
@@ -51,20 +53,21 @@ class CommentConsumer(AsyncWebsocketConsumer):
             group=self.task_group_name,
             message={
                 'type': 'task_comment',
-                'text': json.dumps(response),
+                'data': response
             }
         )
 
     async def task_comment(self, event):
         """ Receive message from room group """
 
-        text_data = event['text']
+        text_data = event['data']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps(text_data))
 
     @database_sync_to_async
     def create_comment(self, user, task, comment):
+        logger.info('A new comment added by %s' % user.username)
         return Comment.objects.create(
             username=user,
             task_id=task,

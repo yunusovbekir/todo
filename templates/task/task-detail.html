@@ -109,11 +109,12 @@
 
 {% block additional_js %}
     <script>
+        const ws_scheme = window.location.protocol === "https:" ? "wss://" : "ws://";
         const task_id = '{{ object.id|escapejs }}';
         const form = $('#comment-form');
 
         const commentSocket = new WebSocket(
-            'ws://'
+            ws_scheme
             + window.location.host
             + '/ws/task/'
             + task_id
@@ -121,12 +122,13 @@
         );
 
 
-        function addComment(obj, helper){
+        function addComment(obj, helper, user){
             const div = document.createElement('div');
 
             console.log('----------------');
             console.log('type: ' +  helper);
             console.log('object: ' +  obj);
+            console.log('user: ' +  user);
             console.log('-----------------');
 
 
@@ -135,7 +137,7 @@
             div.innerHTML = `
                 <div class="comment-wrapper">
                     <h6 class="comment-content">
-                        <a href=''>${ helper }: </a>${ obj }
+                        <a href=''>${ obj.user }: </a>${ obj.comment }
                     </h6>
                     <button
                             class="button-more"
@@ -165,14 +167,14 @@
             event.preventDefault();
             const comment = $('#id_comment_content').val();
             const data = {
-                'comment': comment
+                comment: comment
             };
             commentSocket.send(JSON.stringify(data));
             form[0].reset();
 
             const obj = {
-                'comment': comment,
-                'user': '{{ request.user }}'
+                comment: comment,
+                user: '{{ request.user }}'
             };
 
             const no_comment_div = document.getElementsByClassName('comment');
@@ -180,7 +182,8 @@
                 no_comment_div[0].parentNode.removeChild(no_comment_div[0]);
             }
 
-            addComment(obj, 'sending');
+            addComment(obj, 'sending', '{{ user }}');
+            return false;
         });
 
         commentSocket.onopen = function (e) {
@@ -189,7 +192,9 @@
 
         commentSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            addComment(data, 'receiving');
+            if (data.user !== '{{ user.username }}'){
+                addComment(data, 'receiving', '{{ user }}');
+            }
         };
 
         commentSocket.onclose = function(e) {
